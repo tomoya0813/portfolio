@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lune</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Petemoss&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="effect-container">
+        <div class="star-wrapper">
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+            <div class="star"></div>
+        </div>
+        <div class="rain-wrapper">
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+        </div>
+    </div>
+    <header id="home" class="mainvisual">
+        <div class="header">
+            <h1 class="logo">
+                <img src="img/logo-light.png" alt="luneのロゴ">
+            </h1>
+            <button aria-label="メニュー開閉ボタン" class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+            <nav aria-label="サイトナビゲーション" class="site-nav">
+                <ul class="nav-list">
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#concept">CONCEPT</a></li>
+                    <li><a href="#menu">MENU</a></li>
+                    <li><a href="#news">NEWS</a></li>
+                    <li><a href="#info">INFO</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="title-wrapper">
+            <h2 class="site-title">Lune</h2>
+            <p class="sub-title">coffee & midnight</p>
+        </div>
+    </header>
+    <main id="main">
+
+        <section id="concept" class="r-translate translate">
+            <div class="color-wrapper">
+                <h3>CONCEPT</h3>
+                <div class="concept-text">
+                    <p>
+                        忙しい毎日から少し離れて、
+                        <br>
+                        静かな夜を過ごすための場所。
+                        <br>
+                        lune はコーヒーと甘い香りに包まれた、
+                        <br>
+                        深夜の小さな隠れ家です。
+                    </p>
+                </div>
+                <div class="concept-img"><img src="img/concept.avif" alt="静かな店内"></div>
+            </div>
+        </section>
+        <section id="menu" class="l-translate translate">
+            <div class="color-wrapper">
+                <h3>MENU</h3>
+
+                <div class="menu-section">
+                    <h4>おすすめ</h4>
+                    <div class="menu-wrapper">
+                        <div class="set-img"><img src="img/set.png" alt="お好きなコーヒーとケーキを1つずつどうぞ"></div>
+                        <p>Coffee & Cake Set</p>
+                        <p>&yen;1200</p>
+                    </div>
+                </div>
+                <div class="menu-section">
+                    <h4>coffee</h4>
+                    <div class="flex">
+                        <div class="menu-wrapper">
+                            <img src="img/moon-latte.png" alt="一番人気のラテ">
+                            <p>Moon Latte</p>
+                            <p>&yen;680</p>
+                        </div>
+                        <div class="menu-wrapper">
+                            <img src="img/noir-coffee.png" alt="当店自慢のコーヒー">
+                            <p>Noir Coffee</p>
+                            <p>&yen;680</p>
+                        </div>
+                        <div class="menu-wrapper">
+                            <img src="img/star-mocha.png" alt="星をイメージした甘いモカ">
+                            <p>Star Mocha</p>
+                            <p>&yen;680</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-section">
+                    <h4>cake</h4>
+                    <div class="flex">
+                        <div class="menu-wrapper">
+                            <img src="img/cheese-cake.png" alt="さっぱりとしたチーズケーキ">
+                            <p>Cheese Cake</p>
+                            <p>&yen;720</p>
+                        </div>
+                        <div class="menu-wrapper">
+                            <img src="img/chocolate-cake.png" alt="濃厚なガトーショコラ">
+                            <p>Chocolate Cake</p>
+                            <p>&yen;720</p>
+                        </div>
+                        <div class="menu-wrapper">
+                            <img src="img/tiramisu.png" alt="ココアパウダーをかけたティラミス">
+                            <p>Tiramisu</p>
+                            <p>&yen;720</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-text">
+                    <p>※コーヒーはホット・アイスからお選びいただけます。</p>
+                    <p>※Coffee & Cake Setではお好きな組み合わせをお選びいただけます。</p>
+                </div>
+            </div>
+        </section>
+        <section id="news" class="r-translate translate">
+            <div class="color-wrapper">
+                <h3>NEWS</h3>
+                <div id="news-container">
+                    <!-- jsで追加する
+                    <article class="news-item">
+                    <time datetime=""></time>
+                    <p></p>
+                    </article>
+                     -->
+                </div>
+            </div>
+        </section>
+        <section id="info" class="l-translate translate">
+            <div class="color-wrapper">
+                <div class="info-wrapper">
+                    <h3>INFO</h3>
+                    <h4>営業時間</h4>
+                    <p class="info-text">18:00～24:00</p>
+                    <h4>定休日</h4>
+                    <p class="info-text">毎週 日曜日</p>
+                    <h4>住所</h4>
+                    <address class="info-text">
+                        札幌市 中央区 〇丁目〇-〇
+                    </address>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p class="footer-text"><small>&copy; 2026 lune</small></p>
+        <div class="footer-container">
+            <div class="umbrella"><img src="img/umbrella.png" alt=""></div>
+            <div class="cup"><img src="img/coffee-cup1.png" alt=""></div>
+            <div class="puddle"><img src="img/coffee-puddle.png" alt=""></div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,589 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+img {
+    display: block;
+}
+
+#effect-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+}
+
+/*starエフェクト*/
+.star {
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    transform: rotate(-55deg);
+    background: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"><path fill="%23ffeb3b" d="M12 2l2.4 7.3h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z" /> </svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.star.move {
+    transform: rotate(-55deg) translateX(-160vw);
+    transition: transform 4s;
+}
+
+.star:nth-child(1) {
+    left: 20%;
+    top: -45px;
+}
+
+.star:nth-child(2) {
+    left: 40%;
+    top: -45px;
+}
+
+.star:nth-child(3) {
+    left: 60%;
+    top: -45px;
+}
+
+.star:nth-child(4) {
+    left: 80%;
+    top: -45px;
+}
+
+.star:nth-child(5) {
+    right: -45px;
+    top: 30%;
+}
+
+.star:nth-child(6) {
+    right: -45px;
+    bottom: 30%;
+}
+
+/*rainエフェクト*/
+.rain {
+    width: 50px;
+    height: 50px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%2342a5f5" d="M12 2s6 7.2 6 11.5a6 6 0 0 1-12 0C6 9.2 12 2 12 2z"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+
+}
+
+.rain-wrapper {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    display: none;
+    justify-content: space-between;
+    width: 100vw;
+    height: 30px;
+}
+
+.rain.drop {
+    transform: translateY(100vh);
+    transition: 0.5s;
+}
+
+body {
+    background-color: #333132;
+    overflow-x: hidden;
+    color: #FFFEF9;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+a {
+    color: inherit;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    width: 60vw;
+    margin-top: 200px;
+    background-color: #2b2b2a;
+    padding: 50px;
+    border-radius: 20px;
+    font-size: large;
+    font-family: "Noto Sans JP", sans-serif;
+    align-items: center;
+    gap: 40px;
+    scroll-margin-top: 120px;
+}
+
+.color-wrapper {
+    background-color: #c9822b;
+    padding: 70px 15px 15px 15px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    position: relative;
+}
+
+h3 {
+    color: #2b2b2a;
+    background-color: #ffd54d;
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: xx-large;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    position: absolute;
+    top: 0px;
+    left: 90px;
+    transform: translateY(-45%);
+}
+
+h4 {
+    font-weight: 500;
+    font-size: x-large;
+    margin-bottom: 20px;
+    align-self: flex-start;
+}
+
+
+/*右寄　左寄 section */
+.r-translate {
+    transform: translateX(50px);
+    transition: 0.7s;
+    opacity: 0;
+}
+
+.l-translate {
+    transform: translateX(-50px);
+    transition: 0.7s;
+    opacity: 0;
+}
+
+.r-translate.show,
+.l-translate.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+
+/*
+header
+*/
+
+.mainvisual {
+    background-image: url(img/mainvisual.avif);
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.3);
+    background-blend-mode: multiply;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    transition: background-color 0.5s ease;
+}
+
+.header {
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 50px 0px 50px;
+    position: fixed;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    z-index: 1000;
+}
+
+.logo img {
+    height: 100%;
+
+}
+
+.hamburger {
+    display: none;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    height: 100%;
+    font-size: larger;
+
+}
+
+.nav-list a {
+    font-size: x-large;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+    padding-bottom: 5px;
+}
+
+.nav-list a:hover {
+    color: #ffe600;
+    border-bottom: 3px #ffe600 solid;
+}
+
+.title-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Petemoss", cursive;
+    color: aliceblue;
+    font-size: xx-large;
+    text-align: center;
+    z-index: 1;
+}
+
+.site-title {
+    font-weight: 500;
+    font-size: clamp(90px, 12vw, 300px);
+    transform: translateY(30px);
+    animation: fadeUp 1.5s ease forwards;
+    opacity: 0;
+}
+
+.sub-title {
+    font-weight: 400;
+    font-size: clamp(30px, 4vw, 100px);
+    transform: translateY(30px);
+    animation: fadeUp 1.5s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*concept*/
+
+.concept-text {
+    align-self: center;
+}
+
+.concept-img {
+
+    height: 200px;
+    width: 200px;
+}
+
+.concept-img img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+/*menu*/
+
+.flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+}
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+}
+
+.set-img img {
+    height: 250px;
+    border-radius: 50px;
+    margin: 0 auto;
+}
+
+.flex img {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+
+.menu-text {
+    margin-top: 50px;
+}
+
+/*news*/
+#news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    height: 200px;
+    overflow-y: scroll;
+
+}
+
+.news-item {
+    display: flex;
+    gap: 70px;
+    border-bottom: currentColor dotted 2px;
+    padding-bottom: 5px;
+    width: fit-content;
+}
+
+/*info*/
+.info-text {
+    margin-bottom: 20px;
+}
+
+/*footer*/
+footer {
+    height: 150px;
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    position: relative;
+}
+
+body .footer-text {
+    z-index: 1;
+    color: #000;
+}
+
+
+.footer-container {
+    position: absolute;
+    width: 300px;
+    height: 150px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.umbrella {
+    height: 150px;
+    z-index: 1;
+    position: absolute;
+    left: -30%;
+    top: -75%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+
+.cup {
+    height: 150px;
+    position: absolute;
+    left: -15%;
+    top: -50%;
+
+}
+
+.puddle {
+    position: absolute;
+    height: 150px;
+    top: 0;
+    left: 25%;
+
+}
+
+footer img {
+    height: 100%;
+}
+
+/*footerアニメ*/
+.cup img {
+    transition: 0.7s;
+}
+
+.cup img.fall {
+    transform: rotate(120deg);
+}
+
+.puddle img {
+    opacity: 0;
+    transition: 2s;
+}
+
+.puddle img.appear {
+    opacity: 1;
+}
+
+/*===========================
+light-mode ライトモード　 
+=========================== */
+
+body.light {
+    background-color: #f5f7fb;
+    color: #333132;
+}
+
+body.light .star-wrapper {
+    display: none;
+}
+
+body.light .rain-wrapper {
+    display: flex;
+}
+
+
+body.light .mainvisual {
+    background-color: rgba(255, 255, 255, 0.3);
+    background-blend-mode: multiply;
+}
+
+body.light .nav-list a:hover {
+    color: #c58128;
+    border-bottom: 5px #c58128 solid;
+}
+
+body.light h3 {
+    color: #dbe2ef;
+    background: #2b2b2a;
+}
+
+body.light section {
+    background-color: #dbe2ef;
+}
+
+body.light .color-wrapper {
+    background: #f8be68;
+}
+
+body.light footer {
+    background: #ffffff;
+}
+
+body.light .footer-text {
+    color: #ffffff;
+}
+
+body.light .umbrella {
+    opacity: 1;
+}
+
+body.light .umbrella.disappear {
+    opacity: 0;
+}
+
+
+/*sumaho*/
+
+@media(max-width:1068px) {
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        padding: 0 25px;
+        z-index: 200;
+        border: none;
+        height: 90px;
+        width: 60px;
+        justify-content: center;
+        align-items: center;
+        background: none;
+        position: relative;
+    }
+
+    /*閉じてるとき*/
+
+    .bar {
+        display: block;
+        background-color: #FFFEF9;
+        border-radius: 5px;
+        height: 5px;
+        width: 100%;
+        position: absolute;
+        transition: transform 0.3s ease, background-color 0.5s ease;
+    }
+
+    .hamburger .bar:nth-child(1) {
+        top: 20px
+    }
+
+    .hamburger .bar:nth-child(2) {
+        top: 40px
+    }
+
+    .hamburger .bar:nth-child(3) {
+        top: 60px;
+    }
+
+    /*開いてるとき*/
+    .hamburger.open .bar:nth-child(1) {
+        top: 40px;
+        transform: rotate(-45deg);
+    }
+
+    .hamburger.open .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.open .bar:nth-child(3) {
+        top: 40px;
+        transform: rotate(45deg);
+    }
+
+
+    .site-nav {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        transform: translateX(100%);
+        opacity: 0;
+        transition: transform 0.6s ease, opacity 0.6s ease, background-color 0.5s ease;
+    }
+
+    .site-nav.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .nav-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /*lightモード*/
+
+    body.light .site-nav {
+        background-color: #ffffff;
+    }
+
+    body.light .bar {
+        background-color: #333132;
+    }
+
+
+}
