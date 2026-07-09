@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tetris.css">
+    <title>テトリス</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="game-wrapper">
+
+            <div class="hold-wrapper">
+                <p class="text">Hold</p>
+                <canvas id="hold" width="160" height="160"></canvas>
+            </div>
+
+            <canvas id="field" width="400" height="800"></canvas>
+
+            <div class="next-wrapper">
+                <p class="text">Next</p>
+                <canvas class="next" width="160" height="160"></canvas>
+                <canvas class="next" width="160" height="160"></canvas>
+                <canvas class="next" width="160" height="160"></canvas>
+                <canvas class="next" width="160" height="160"></canvas>
+            </div>
+
+            <div id="message" class="none">
+                <p class="text">Escキーでリトライ</p>
+                <p class="text">pキーでポーズ解除</p>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+<script src="tetris.js"></script>
+
+</html>
