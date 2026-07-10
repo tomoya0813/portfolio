@@ -2,6 +2,8 @@
   データ
 =========================================================*/
 
+
+//コピー作成のためここから移動禁止======================================================================================
 //操作
 const state = {
     game: {
@@ -13,20 +15,23 @@ const state = {
         hardDrop: false,
         moved: false,
         lockTimer: null,
-        lockCount: 0,
+        lockCount: 15,
     }
 
 }
+
 const copyState = structuredClone(state);
-const resetGame = () => {
+
+const resetstate = () => {
     Object.assign(state, copyState)
 }
 
 const copyPiecesState = structuredClone(state.piece);
+
 const resetPiece = () => {
     Object.assign(state.piece, copyPiecesState)
 }
-
+//ここまで移動禁止========================================================================================/
 const contoroleData = {
     d: () => movePiece(1, 0),
     a: () => movePiece(-1, 0),
@@ -40,7 +45,6 @@ const contoroleData = {
 
 //数値
 const config = {
-    lockCount: 14,
     field: {
         height: 20,
         width: 10
@@ -74,23 +78,23 @@ const colorData = {
 
 // srs
 const srs = {
-    "0to1": [[0, 0], [-1, 0], [-1, - 1], [0, 2], [-1, 2]],
+    "0to1": [[0, 0], [-1, 0], [-1, -1], [0, 2], [-1, 2]],
     "1to2": [[0, 0], [1, 0], [1, 1], [0, -2], [1, -2]],
     "2to3": [[0, 0], [1, 0], [1, -1], [0, 2], [1, 2]],
     "3to0": [[0, 0], [-1, 0], [-1, 1], [0, -2], [-1, -2]],
-    "0to3": [[0, 0], [-1, 0], [-1, -1], [0, 2], [-1, 2]],
+    "0to3": [[0, 0], [1, 0], [1, -1], [0, 2], [1, 2]],
     "3to2": [[0, 0], [-1, 0], [-1, 1], [0, -2], [-1, -2]],
     "2to1": [[0, 0], [-1, 0], [-1, -1], [0, 2], [-1, 2]],
     "1to0": [[0, 0], [1, 0], [1, 1], [0, -2], [1, -2]]
 }
 const srsI = {
-    "0to1": [[0, 0], [-2, 0], [1, 0], [-2, -1], [1, 2]],
-    "1to2": [[0, 0], [-1, 0], [2, 0], [-1, 2], [2, -1]],
-    "2to3": [[0, 0], [2, 0], [-1, 0], [2, 1], [-1, -2]],
-    "3to0": [[0, 0], [1, 0], [-2, 0], [1, -2], [-2, 1]],
+    "0to1": [[0, 0], [-2, 0], [1, 0], [-2, 1], [1, -2]],
+    "1to2": [[0, 0], [-1, 0], [2, 0], [-1, -2], [2, 1]],
+    "2to3": [[0, 0], [2, 0], [-1, 0], [2, -1], [-1, 2]],
+    "3to0": [[0, 0], [1, 0], [-2, 0], [1, 2], [-2, -1]],
     "0to3": [[0, 0], [-1, 0], [2, 0], [-1, -2], [2, 1]],
-    "3to2": [[0, 0], [-2, 0], [1, 0], [-2, -1], [1, 2]],
-    "2to1": [[0, 0], [1, 0], [-2, 0], [1, -2], [-2, -1]],
+    "3to2": [[0, 0], [-2, 0], [1, 0], [-2, 1], [1, -2]],
+    "2to1": [[0, 0], [1, 0], [-2, 0], [1, 2], [-2, -1]],
     "1to0": [[0, 0], [2, 0], [-1, 0], [2, -1], [-1, 2]]
 }
 
@@ -355,7 +359,7 @@ setInterval(() => {
 setInterval(() => {
     //ハードドロップ
     if (state.piece.hardDrop === true) {
-        clearTimeout(state.piece.lockTimer)
+        lockTimerReset();
         lockPiece();
         lineBreak();
         resetPiece();
@@ -364,35 +368,41 @@ setInterval(() => {
     }
     //ブロックと接触してるとき
     if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-
+        if (state.piece.lockCount <= 0) {
+            lockTimerReset();
+            lockPiece();
+            lineBreak();
+            resetPiece();
+            piece = spawnPiece();
+            return;
+        };
         if (state.piece.lockTimer === null) {
             state.piece.lockTimer = setTimeout(() => {
                 lockPiece();
                 lineBreak();
                 resetPiece();
                 piece = spawnPiece();
-            }, 500)
+            }, 500);
+
         }
     } else {//空中
-        if (state.piece.moved === true) {
-            state.piece.lockCount++;
-            state.piece.moved = false;
-            if (state.piece.lockCount < config.lockCount) {
-                clearTimeout(state.piece.lockTimer);
-                state.piece.lockTimer = null;
-            } else if (state.piece.lockTimer === null) {
-                state.piece.lockTimer = setTimeout(() => {
-                    lockPiece();
-                    lineBreak();
-                    resetPiece();
-                    piece = spawnPiece();
-                    return
-                }, 500)
-            }
-        };
+        lockTimerReset();
     }
 }, 16);
 
+// lockTimerをリセット
+const lockTimerReset = () => {
+    clearTimeout(state.piece.lockTimer);
+    state.piece.lockTimer = null;
+
+}
+
+//lockCountを減少
+const lockCountMinus = () => {
+    if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
+        state.piece.lockCount--;
+    }
+}
 
 //ミノをfieldに固定
 
@@ -447,10 +457,8 @@ const movePiece = (x, y) => {
     if (!collision(nx, ny, piece.type, piece.rotation)) {
         piece.x = nx
         piece.y = ny;
-    }
-
-    if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-        state.piece.moved = true
+        lockCountMinus();
+        lockTimerReset();
     }
 }
 
@@ -480,14 +488,14 @@ const rotatePiece = (n) => {
             piece.x += sx;
             piece.y += sy;
             piece.rotation = nrota;
+            lockCountMinus();
+            lockTimerReset();
+            return;
         }
-        if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-            state.piece.moved = true;
-        }
-        return;
     }
 
 }
+
 
 //　ホールド
 
