@@ -7,8 +7,9 @@
 //操作
 const state = {
     game: {
-
         holdPiece: null,
+        isGameOver: false,
+        isPaused: false
     },
     piece: {
         holdFlag: true,
@@ -40,7 +41,8 @@ const contoroleData = {
     k: () => rotatePiece(1),
     h: () => hold(),
     w: () => hardDrop(),
-    r: () => resetGame()
+    r: () => resetGame(),
+    p: () => pause(),
 };
 
 //数値
@@ -351,12 +353,16 @@ const collision = (nx, ny, type, nrota) => {
 
 //落下処理
 setInterval(() => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
     if (!collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
         piece.y++
     }
 }, 1000);
 
 setInterval(() => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
     //ハードドロップ
     if (state.piece.hardDrop === true) {
         lockTimerReset();
@@ -438,6 +444,31 @@ const lineBreak = () => {
     }
 }
 
+//ゲーム中断処理
+const text1 = document.getElementById('text1');
+const text2 = document.getElementById('text2');
+const message = document.getElementById('message');
+//ゲームオーバー
+
+const gameOver = () => {
+    state.game.isGameOver = true;
+    message.classList.remove('none');
+    text1.textContent = 'ここにスコア入れる';
+    text2.textContent = 'Escキーでリトライ'
+}
+
+
+
+
+//ポｰズ　
+const pause = () => {
+    if (state.game.isGameOver) return;
+    state.game.isPaused = !state.game.isPaused;
+    message.classList.toggle('none');
+    text1.textContent = 'PAUSE';
+    text2.textContent = 'pキーでPAUSE解除'
+}
+
 /*=============================================
 ゲーム進行
 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝*/
@@ -451,6 +482,8 @@ const contorole = () => {
 
 //移動
 const movePiece = (x, y) => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
     const nx = piece.x + x;
     const ny = piece.y + y;
 
@@ -464,6 +497,8 @@ const movePiece = (x, y) => {
 
 //ハードドロップ
 const hardDrop = () => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
     while (!collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
         piece.y++;
     }
@@ -473,6 +508,8 @@ const hardDrop = () => {
 
 //回転
 const rotatePiece = (n) => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
     const nrota = (piece.rotation + n + 4) % 4;
     const s = `${piece.rotation}to${nrota}`;
 
@@ -500,6 +537,8 @@ const rotatePiece = (n) => {
 //　ホールド
 
 const hold = () => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
     if (state.piece.holdFlag === false) return;
 
     if (state.game.holdPiece === null) {
@@ -682,15 +721,28 @@ setInterval(() => {
     drawHold();
 }, 16)
 
+contorole()
 
-
+const text1 = document.getElementById('text1');
+const text2 = document.getElementById('text2');
+const message = document.getElementById('message');
 //ゲームオーバー
 
 const gameOver = () => {
-    if (collision(piece.x, piece.y, piece.type, piece.rotation)) {
-        console.log(1)
-    }
+    state.game.isGameOver = true;
+    message.classList.remove('none');
+    text1.textContent = 'ここにスコア入れる';
+    text2.textContent = 'Escキーでリトライ'
 }
 
 
-contorole()
+
+
+//ポｰズ　
+const pause = () => {
+    if (state.game.isGameOver) return;
+    state.game.isPaused = !state.game.isPaused;
+    message.classList.toggle('none');
+    text1.textContent = 'PAUSE';
+    text2.textContent = 'pキーでPAUSE解除'
+}
