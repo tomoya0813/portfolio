@@ -9,7 +9,8 @@ const state = {
     game: {
         holdPiece: null,
         isGameOver: false,
-        isPaused: false
+        isPaused: false,
+        dropTimer: null
     },
     piece: {
         holdFlag: true,
@@ -17,6 +18,7 @@ const state = {
         moved: false,
         lockTimer: null,
         lockCount: 15,
+
     }
 
 }
@@ -105,8 +107,8 @@ const offset = {
     T: { x: 0, y: 0.5 },
     J: { x: 0, y: 0.5 },
     L: { x: 0, y: 0.5 },
-    S: { x: 0, y: -0.5 },
-    Z: { x: 0, y: -0.5 },
+    S: { x: 0, y: 0.5 },
+    Z: { x: 0, y: 0.5 },
     O: { x: -0.5, y: 0.5 },
     I: { x: 0, y: 0.5 }
 }
@@ -181,15 +183,14 @@ const blockData = {
             [1, 1, 0],
             [0, 1, 0],
             [0, 1, 0]
-        ],
+        ]
     ],
 
     S: [
         [
-            [0, 0, 0],
             [0, 1, 1],
-            [1, 1, 0]
-
+            [1, 1, 0],
+            [0, 0, 0],
         ],
         [
             [0, 1, 0],
@@ -205,15 +206,13 @@ const blockData = {
             [0, 1, 0],
             [0, 1, 1],
             [0, 0, 1]
-
-        ],
+        ]
     ],
     Z: [
         [
-            [0, 0, 0],
             [1, 1, 0],
             [0, 1, 1],
-
+            [0, 0, 0]
         ],
         [
             [0, 0, 1],
@@ -252,7 +251,7 @@ const blockData = {
             [0, 1, 1],
             [0, 1, 1],
             [0, 0, 0]
-        ],
+        ]
 
     ],
     I: [
@@ -308,22 +307,24 @@ const blockShuffle = () => {
     return randBlock
 }
 
-let blockContainer = blockShuffle();
+
 
 //ミノの出現　
 const spawnPiece = () => {
     while (blockContainer.length < 6) {
         blockContainer.push(...blockShuffle())
     }
+
+    const nextType = blockContainer.shift();
+
     return {
         x: config.piece.spawnX,
-        y: config.piece.spawnY,
-        type: blockContainer.shift(),
+        y: nextType === 'I' ?
+            0 : config.piece.spawnY,
+        type: nextType,
         rotation: 0
     }
 };
-
-let piece = spawnPiece();
 
 
 //衝突判定
@@ -350,52 +351,11 @@ const collision = (nx, ny, type, nrota) => {
     return false;
 }
 
-
-//落下処理
-setInterval(() => {
-    if (state.game.isPaused || state.game.isGameOver) return;
-
-    if (!collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-        piece.y++
-    }
-}, 1000);
-
-setInterval(() => {
-    if (state.game.isPaused || state.game.isGameOver) return;
-
-    //ハードドロップ
-    if (state.piece.hardDrop === true) {
-        lockTimerReset();
-        lockPiece();
-        lineBreak();
-        resetPiece();
-        piece = spawnPiece();
-        return;
-    }
-    //ブロックと接触してるとき
-    if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-        if (state.piece.lockCount <= 0) {
-            lockTimerReset();
-            lockPiece();
-            lineBreak();
-            resetPiece();
-            piece = spawnPiece();
-            return;
-        };
-        if (state.piece.lockTimer === null) {
-            state.piece.lockTimer = setTimeout(() => {
-                lockPiece();
-                lineBreak();
-                resetPiece();
-                piece = spawnPiece();
-            }, 500);
-
-        }
-    } else {//空中
-        lockTimerReset();
-    }
-}, 16);
-
+//dropタイマーをリセット
+const dropTimerReset = () => {
+    clearInterval(state.game.dropTimer);
+    state.game.dropTimer = setInterval(drop, 1000);
+}
 // lockTimerをリセット
 const lockTimerReset = () => {
     clearTimeout(state.piece.lockTimer);
@@ -409,6 +369,60 @@ const lockCountMinus = () => {
         state.piece.lockCount--;
     }
 }
+
+
+
+//落下処理
+
+const drop = () => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
+    if (!collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
+        piece.y++
+    }
+}
+
+const lock = () => {
+    if (state.game.isPaused || state.game.isGameOver) return;
+
+    //ハードドロップ
+    if (state.piece.hardDrop === true) {
+        lockTimerReset();
+        lockPiece();
+        lineBreak();
+        resetPiece();
+        piece = spawnPiece();
+        dropTimerReset();
+        return;
+    }
+    //ブロックと接触してるとき
+    if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
+        if (state.piece.lockCount <= 0) {
+            lockTimerReset();
+            lockPiece();
+            lineBreak();
+            resetPiece();
+            piece = spawnPiece();
+            dropTimerReset();
+
+            return;
+        };
+        if (state.piece.lockTimer === null) {
+            state.piece.lockTimer = setTimeout(() => {
+                lockPiece();
+                lineBreak();
+                resetPiece();
+                piece = spawnPiece();
+                dropTimerReset();
+            }, 500);
+
+        }
+    } else {//空中
+        lockTimerReset();
+    }
+}
+
+
 
 //ミノをfieldに固定
 
@@ -468,6 +482,8 @@ const pause = () => {
     text1.textContent = 'PAUSE';
     text2.textContent = 'pキーでPAUSE解除'
 }
+
+
 
 /*=============================================
 ゲーム進行
@@ -551,12 +567,14 @@ const hold = () => {
 
         piece = {
             x: config.piece.spawnX,
-            y: config.piece.spawnY,
+            y: box === 'I' ?
+                0 : config.piece.spawnY,
             type: box,
             rotation: 0
         };
     }
-    state.piece.holdFlag = false
+    state.piece.holdFlag = false;
+    dropTimerReset();
 }
 
 
@@ -711,6 +729,7 @@ const drawGhost = () => {
     fieldCtx.restore();
 }
 
+
 setInterval(() => {
     fieldCtx.clearRect(0, 0, fieldCanvas.width, fieldCanvas.height)
     drawField();
@@ -721,28 +740,10 @@ setInterval(() => {
     drawHold();
 }, 16)
 
+
+let blockContainer = blockShuffle();
+let piece = spawnPiece();
+dropTimerReset();
+
+setInterval(lock, 16);
 contorole()
-
-const text1 = document.getElementById('text1');
-const text2 = document.getElementById('text2');
-const message = document.getElementById('message');
-//ゲームオーバー
-
-const gameOver = () => {
-    state.game.isGameOver = true;
-    message.classList.remove('none');
-    text1.textContent = 'ここにスコア入れる';
-    text2.textContent = 'Escキーでリトライ'
-}
-
-
-
-
-//ポｰズ　
-const pause = () => {
-    if (state.game.isGameOver) return;
-    state.game.isPaused = !state.game.isPaused;
-    message.classList.toggle('none');
-    text1.textContent = 'PAUSE';
-    text2.textContent = 'pキーでPAUSE解除'
-}
