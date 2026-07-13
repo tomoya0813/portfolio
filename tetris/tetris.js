@@ -13,7 +13,7 @@ const state = {
         dropTimer: null
     },
     piece: {
-        holdFlag: true,
+        canHold: true,
         hardDrop: false,
         moved: false,
         lockTimer: null,
@@ -56,7 +56,8 @@ const config = {
     cellSize: 40,
     piece: {
         spawnX: 3,
-        spawnY: 1
+        spawnY: 0,
+        ISpawnY: -1
     },
     hold: { cellSize: 30 },
     next: { cellSize: 30 },
@@ -285,7 +286,10 @@ const blockData = {
 
 const field = Array.from({ length: config.field.height }, () => Array(config.field.width).fill(0))
 
-
+//フィールドデバック用　x座標 y座標　typeで指定マスを埋める
+const debugField = (x, y, type) => {
+    field[y - 1][x - 1] = `${type}`
+}
 /*======================================================
      ゲームシステム
 ======================================================*/
@@ -320,7 +324,7 @@ const spawnPiece = () => {
     return {
         x: config.piece.spawnX,
         y: nextType === 'I' ?
-            0 : config.piece.spawnY,
+            config.piece.ISpawnY : config.piece.spawnY,
         type: nextType,
         rotation: 0
     }
@@ -392,6 +396,7 @@ const lock = () => {
         lineBreak();
         resetPiece();
         piece = spawnPiece();
+        checkRespawn()
         dropTimerReset();
         return;
     }
@@ -403,6 +408,7 @@ const lock = () => {
             lineBreak();
             resetPiece();
             piece = spawnPiece();
+            checkRespawn()
             dropTimerReset();
 
             return;
@@ -413,6 +419,7 @@ const lock = () => {
                 lineBreak();
                 resetPiece();
                 piece = spawnPiece();
+                checkRespawn()
                 dropTimerReset();
             }, 500);
 
@@ -549,31 +556,59 @@ const rotatePiece = (n) => {
 
 }
 
+const checkRespawn = () => {
+    if (collision(piece.x, piece.y, piece.type, piece.rotation)) {
+        gameOver();
+    }
+}
 
 //　ホールド
 
 const hold = () => {
     if (state.game.isPaused || state.game.isGameOver) return;
 
-    if (state.piece.holdFlag === false) return;
+    if (state.piece.canHold === false) return;
+
 
     if (state.game.holdPiece === null) {
+
+        const type = blockContainer[0];
+        const x = config.piece.spawnX;
+        const y = type === 'I' ?
+            config.piece.ISpawnY : config.piece.spawnY;
+
+
+        if (collision(x, y, type, 0)) {
+            state.piece.canHold = false;
+            return;
+        }
         state.game.holdPiece = piece.type;
         piece = spawnPiece();
+
+        checkRespawn();
     } else {
         const box = state.game.holdPiece;
+
+        const x = config.piece.spawnX;
+        const y = box === 'I' ?
+            config.piece.ISpawnY : config.piece.spawnY;
+
+        if (collision(x, y, box, 0)) {
+            state.piece.canHold = false;
+            return;
+        }
 
         state.game.holdPiece = piece.type;
 
         piece = {
             x: config.piece.spawnX,
             y: box === 'I' ?
-                0 : config.piece.spawnY,
+                config.piece.ISpawnY : config.piece.spawnY,
             type: box,
             rotation: 0
         };
     }
-    state.piece.holdFlag = false;
+    state.piece.canHold = false;
     dropTimerReset();
 }
 
@@ -636,6 +671,7 @@ const holdCtx = holdCanvas.getContext('2d')
 
 const drawHold = () => {
     if (state.game.holdPiece === null) return;
+
     holdCtx.clearRect(0, 0, holdCanvas.width, holdCanvas.height);
     holdCtx.fillStyle = colorData.block[state.game.holdPiece]
 
@@ -744,6 +780,5 @@ setInterval(() => {
 let blockContainer = blockShuffle();
 let piece = spawnPiece();
 dropTimerReset();
-
 setInterval(lock, 16);
 contorole()
