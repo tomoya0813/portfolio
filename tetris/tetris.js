@@ -10,7 +10,8 @@ const state = {
         holdPiece: null,
         isGameOver: false,
         isPaused: false,
-        dropTimer: null
+        dropTimer: null,
+
     },
     piece: {
         canHold: true,
@@ -18,7 +19,7 @@ const state = {
         moved: false,
         lockTimer: null,
         lockCount: 15,
-
+        controleInterval: null
     }
 
 }
@@ -35,7 +36,7 @@ const resetPiece = () => {
     Object.assign(state.piece, copyPiecesState)
 }
 //ここまで移動禁止========================================================================================/
-const contoroleData = {
+const controleData = {
     d: () => movePiece(1, 0),
     a: () => movePiece(-1, 0),
     s: () => movePiece(0, 1),
@@ -497,10 +498,67 @@ const pause = () => {
 ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝*/
 
 // 操作
-const contorole = () => {
+const keyState = {
+    d: false,
+    a: false,
+    s: false
+}
+
+
+const holdDelayTimer = {
+    d: null,
+    a: null,
+    s: null
+}
+
+
+// 操作
+const controle = () => {
+
     document.addEventListener("keydown", (e) => {
-        if (Object.hasOwn(contoroleData, e.key)) contoroleData[e.key]();
-    })
+
+        if (!Object.hasOwn(controleData, e.key)) return;
+        if (e.repeat) return;
+
+        controleData[e.key]();
+
+        if (e.key === 'd' || e.key === 'a' || e.key === 's') {
+
+            if (holdDelayTimer[e.key]) {
+                clearTimeout(holdDelayTimer[e.key]);
+            }
+
+            holdDelayTimer[e.key] = setTimeout(() => {
+                keyState[e.key] = true;
+            }, 300);
+        }
+    });
+
+
+    document.addEventListener("keyup", (e) => {
+
+        if (!Object.hasOwn(keyState, e.key)) return;
+
+        keyState[e.key] = false;
+
+        clearTimeout(holdDelayTimer[e.key]);
+        holdDelayTimer[e.key] = null;
+    });
+
+
+    if (state.piece.controleInterval === null) {
+
+        state.piece.controleInterval = setInterval(() => {
+
+            for (const key in keyState) {
+
+                if (keyState[key]) {
+                    controleData[key]();
+                }
+            }
+        }, 32);
+
+    }
 }
 
 //移動
@@ -781,4 +839,4 @@ let blockContainer = blockShuffle();
 let piece = spawnPiece();
 dropTimerReset();
 setInterval(lock, 16);
-contorole()
+controle()
