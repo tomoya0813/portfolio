@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <h1 class="none">tetris</h1>
     <div class="container">
 
         <div class="game-wrapper">
@@ -27,6 +28,42 @@
                 <canvas class="next" width="160" height="160"></canvas>
                 <canvas class="next" width="160" height="160"></canvas>
             </div>
+            <div class="control">
+                <h2>操作方法</h2>
+                <dl>
+                    <dt>A / D</dt>
+                    <dd>左右移動</dd>
+
+                    <dt>S</dt>
+                    <dd>ソフトドロップ</dd>
+
+                    <dt>W</dt>
+                    <dd>ハードドロップ</dd>
+
+                    <dt>J / K</dt>
+                    <dd>左回転 / 右回転</dd>
+
+                    <dt>H</dt>
+                    <dd>ホールド</dd>
+
+                    <dt>P</dt>
+                    <dd>一時停止</dd>
+
+                    <dt>Esc</dt>
+                    <dd>リスタート</dd>
+                </dl>
+            </div>
+            <dl class="game-status">
+
+                <dt>score</dt>
+                <dd id="score">000000000</dd>
+
+                <dt>line</dt>
+                <dd id="line">0</dd>
+
+                <dt>level</dt>
+                <dd id="level">000000000</dd>
+            </dl>
 
             <div id="message" class="none">
                 <p id="text1" class="text"></p>
