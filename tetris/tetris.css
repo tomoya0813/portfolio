@@ -55,6 +55,22 @@ canvas {
     font-size: 1.5rem;
 }
 
+.control {
+    position: absolute;
+    left: 0;
+    top: 30%;
+}
+
+.game-status {
+    position: absolute;
+    left: 0;
+    top: 75%;
+    font-size: 1.2rem;
+    text-align: center;
+    width: 170px;
+    line-height: 2rem;
+}
+
 #message {
     background-color: white;
     position: absolute;
@@ -70,6 +86,7 @@ canvas {
     align-items: center;
 }
 
-#message.none {
+#message.none,
+.none {
     display: none;
 }
