@@ -11,7 +11,8 @@ const state = {
         isGameOver: false,
         isPaused: false,
         dropTimer: null,
-
+        score: 0,
+        clearedLine: 0
     },
     piece: {
         canHold: true,
@@ -19,15 +20,20 @@ const state = {
         moved: false,
         lockTimer: null,
         lockCount: 15,
-        controleInterval: null
+        controleInterval: null,
+        line: 0,
+
     }
 
 }
 
 const copyState = structuredClone(state);
 
-const resetstate = () => {
-    Object.assign(state, copyState)
+const resetState = () => {
+    clearInterval(state.game.dropTimer);
+    clearTimeout(state.piece.lockTimer);
+    Object.assign(state.game, copyState.game);
+    Object.assign(state.piece, copyState.piece);
 }
 
 const copyPiecesState = structuredClone(state.piece);
@@ -44,26 +50,51 @@ const controleData = {
     k: () => rotatePiece(1),
     h: () => hold(),
     w: () => hardDrop(),
-    r: () => resetGame(),
+    Escape: () => resetGame(),
     p: () => pause(),
 };
 
 //数値
 const config = {
     field: {
-        height: 20,
+        hiddenHeight: 4,
+        visibleHeight: 20,
+        height: 24,
         width: 10
     },
     cellSize: 40,
     piece: {
         spawnX: 3,
-        spawnY: 0,
-        ISpawnY: -1
+        spawnY: 4,
+        ISpawnY: 3
     },
     hold: { cellSize: 30 },
     next: { cellSize: 30 },
-    ghost: 0.2
+    ghost: 0.2,
+    score: {
+        line0: 0,
+        line1: 100,
+        line2: 300,
+        line3: 500,
+        line4: 800,
+    }
 };
+//スコア計算
+const scoreCount = () => {
+    const score = config.score[`line${state.piece.line}`];
+    state.game.score += score;
+
+    const bord = document.getElementById('score');
+    bord.textContent = String(state.game.score).padStart(9, 0);
+
+}
+//line消去数計算
+const clearedLineCount = () => {
+    const clearedLine = state.game.clearedLine;
+    const bord = document.getElementById('line');
+
+    bord.textContent = (clearedLine)
+}
 
 // 色
 const colorData = {
@@ -288,7 +319,7 @@ const blockData = {
 const field = Array.from({ length: config.field.height }, () => Array(config.field.width).fill(0))
 
 //フィールドデバック用　x座標 y座標　typeで指定マスを埋める
-const debugField = (x, y, type) => {
+const dF = (x, y, type) => {
     field[y - 1][x - 1] = `${type}`
 }
 /*======================================================
@@ -342,12 +373,12 @@ const collision = (nx, ny, type, nrota) => {
             if (shape[y][x] === 1) {
                 const newPieceX = nx + x;
                 const newPieceY = ny + y;
+
                 if (
                     newPieceX < 0 ||
                     newPieceX >= field[0].length ||
-                    newPieceY < 0 ||
                     newPieceY >= field.length ||
-                    field[newPieceY][newPieceX] !== 0) {
+                    (newPieceY >= 0 && field[newPieceY][newPieceX] !== 0)) {
                     return true;
                 }
             }
@@ -395,6 +426,8 @@ const lock = () => {
         lockTimerReset();
         lockPiece();
         lineBreak();
+        scoreCount();
+        clearedLineCount();
         resetPiece();
         piece = spawnPiece();
         checkRespawn()
@@ -407,6 +440,8 @@ const lock = () => {
             lockTimerReset();
             lockPiece();
             lineBreak();
+            scoreCount();
+            clearedLineCount();
             resetPiece();
             piece = spawnPiece();
             checkRespawn()
@@ -418,6 +453,8 @@ const lock = () => {
             state.piece.lockTimer = setTimeout(() => {
                 lockPiece();
                 lineBreak();
+                scoreCount();
+                clearedLineCount();
                 resetPiece();
                 piece = spawnPiece();
                 checkRespawn()
@@ -441,7 +478,13 @@ const lockPiece = () => {
     for (let y = 0; y < shape.length; y++) {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
-                field[piece.y + y][piece.x + x] = piece.type
+                const targetY = piece.y + y;
+                const targetX = piece.x + x;
+
+                if (targetY >= 0) {
+                    field[targetY][targetX] = piece.type;
+                    field[piece.y + y][piece.x + x] = piece.type
+                }
             }
         }
     }
@@ -451,18 +494,22 @@ const lockPiece = () => {
 
 const lineBreak = () => {
     const breakedLine = [];
+
     for (let y = 0; y < field.length; y++) {
         if (!field[y].includes(0)) {
             breakedLine.push(y)
         }
     }
+
+    state.piece.line = breakedLine.length;
+    state.game.clearedLine += breakedLine.length
+
     for (let i = breakedLine.length - 1; i >= 0; i--) {
         field.splice(breakedLine[i], 1);
 
     }
-
     for (let n = 0; n < breakedLine.length; n++) {
-        field.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
+        field.unshift(Array(config.field.width).fill(0))
     }
 }
 
@@ -518,6 +565,7 @@ const controle = () => {
     document.addEventListener("keydown", (e) => {
 
         if (!Object.hasOwn(controleData, e.key)) return;
+        e.preventDefault();
         if (e.repeat) return;
 
         controleData[e.key]();
@@ -681,12 +729,16 @@ const fieldCanvas = document.getElementById('field');
 const fieldCtx = fieldCanvas.getContext('2d');
 
 const drawField = () => {
-    for (let y = 0; y < field.length; y++) {
+    const hidden = config.field.hiddenHeight
+
+    for (let y = hidden; y < field.length; y++) {
         for (let x = 0; x < field[y].length; x++) {
             if (field[y][x] !== 0) {
+                const drawX = x * config.cellSize;
+                const drawY = (y - hidden) * config.cellSize;
                 fieldCtx.fillStyle = colorData.block[field[y][x]];
-                fieldCtx.fillRect(x * config.cellSize, y * config.cellSize, config.cellSize, config.cellSize)
-                fieldCtx.strokeRect(x * config.cellSize, y * config.cellSize, config.cellSize, config.cellSize)
+                fieldCtx.fillRect(drawX, drawY, config.cellSize, config.cellSize)
+                fieldCtx.strokeRect(drawX, drawY, config.cellSize, config.cellSize)
             }
 
         }
@@ -697,11 +749,14 @@ const drawField = () => {
 const drawGrid = () => {
 
     fieldCtx.strokeStyle = colorData.grid;
-
-    for (let y = 0; y < field.length; y++) {
+    const hidden = config.field.hiddenHeight;
+    for (let y = hidden; y < field.length; y++) {
         for (let x = 0; x < field[y].length; x++) {
 
-            fieldCtx.strokeRect(x * config.cellSize, y * config.cellSize, config.cellSize, config.cellSize)
+            const drawX = x * config.cellSize
+            const drawY = (y - hidden) * config.cellSize
+
+            fieldCtx.strokeRect(drawX, drawY, config.cellSize, config.cellSize)
         }
     }
 }
@@ -710,12 +765,19 @@ const drawGrid = () => {
 const drawPiece = () => {
     fieldCtx.fillStyle = colorData.block[piece.type];
     fieldCtx.strokeStyle = colorData.piece.stroke;
+
     const shape = blockData[piece.type][piece.rotation];
+    const hidden = config.field.hiddenHeight;
+
     for (let y = 0; y < shape.length; y++) {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
-                fieldCtx.fillRect((piece.x + x) * config.cellSize, (piece.y + y) * config.cellSize, config.cellSize, config.cellSize);
-                fieldCtx.strokeRect((piece.x + x) * config.cellSize, (piece.y + y) * config.cellSize, config.cellSize, config.cellSize);
+
+                const drawX = (piece.x + x) * config.cellSize
+                const drawY = (piece.y + y - hidden) * config.cellSize
+
+                fieldCtx.fillRect(drawX, drawY, config.cellSize, config.cellSize);
+                fieldCtx.strokeRect(drawX, drawY, config.cellSize, config.cellSize);
             }
         }
     }
@@ -728,9 +790,9 @@ const holdCanvas = document.getElementById('hold');
 const holdCtx = holdCanvas.getContext('2d')
 
 const drawHold = () => {
+    holdCtx.clearRect(0, 0, holdCanvas.width, holdCanvas.height)
     if (state.game.holdPiece === null) return;
 
-    holdCtx.clearRect(0, 0, holdCanvas.width, holdCanvas.height);
     holdCtx.fillStyle = colorData.block[state.game.holdPiece]
 
     const shape = blockData[state.game.holdPiece][0];
@@ -745,11 +807,11 @@ const drawHold = () => {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
 
-                const nx = centerX + (x + off.x) * size;
-                const ny = centerY + (y + off.y) * size;
+                const drawX = centerX + (x + off.x) * size;
+                const drawY = centerY + (y + off.y) * size;
 
-                holdCtx.fillRect(nx, ny, size, size);
-                holdCtx.strokeRect(nx, ny, size, size);
+                holdCtx.fillRect(drawX, drawY, size, size);
+                holdCtx.strokeRect(drawX, drawY, size, size);
             }
         }
     }
@@ -780,11 +842,11 @@ const drawNext = () => {
             for (let x = 0; x < shape[y].length; x++) {
                 if (shape[y][x] === 1) {
 
-                    const nx = centerX + (x + off.x) * size;
-                    const ny = centerY + (y + off.y) * size;
+                    const drawX = centerX + (x + off.x) * size;
+                    const drawY = centerY + (y + off.y) * size;
 
-                    element.fillRect(nx, ny, size, size);
-                    element.strokeRect(nx, ny, size, size)
+                    element.fillRect(drawX, drawY, size, size);
+                    element.strokeRect(drawX, drawY, size, size)
                 }
             };
         }
@@ -811,12 +873,16 @@ const drawGhost = () => {
     fieldCtx.fillStyle = colorData.block[ghost.type];
 
     const shape = blockData[ghost.type][ghost.rotation];
+    const hidden = config.field.hiddenHeight;
 
     for (let y = 0; y < shape.length; y++) {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
-                fieldCtx.fillRect((ghost.x + x) * config.cellSize, (ghost.y + y) * config.cellSize, config.cellSize, config.cellSize);
-                fieldCtx.strokeRect((ghost.x + x) * config.cellSize, (ghost.y + y) * config.cellSize, config.cellSize, config.cellSize);
+                const drawX = (ghost.x + x) * config.cellSize;
+                const drawY = (ghost.y + y - hidden) * config.cellSize;
+
+                fieldCtx.fillRect(drawX, drawY, config.cellSize, config.cellSize);
+                fieldCtx.strokeRect(drawX, drawY, config.cellSize, config.cellSize);
             }
         }
     }
@@ -840,3 +906,22 @@ let piece = spawnPiece();
 dropTimerReset();
 setInterval(lock, 16);
 controle()
+
+const resetGame = () => {
+    resetState();
+
+    for (let y = 0; y < field.length; y++) {
+        field[y].fill(0);
+    }
+
+    blockContainer = blockShuffle();
+
+    piece = spawnPiece();
+
+    dropTimerReset();
+
+    message.classList.add('none');
+}
+
+//今後　スコア追加　移動じの左右ブレ解消　
+
