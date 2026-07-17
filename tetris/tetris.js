@@ -12,7 +12,8 @@ const state = {
         isPaused: false,
         dropTimer: null,
         score: 0,
-        clearedLine: 0
+        clearedLine: 0,
+        level: 1,
     },
     piece: {
         canHold: true,
@@ -20,7 +21,7 @@ const state = {
         moved: false,
         lockTimer: null,
         lockCount: 15,
-        controleInterval: null,
+        controlInterval: null,
         line: 0,
 
     }
@@ -42,16 +43,16 @@ const resetPiece = () => {
     Object.assign(state.piece, copyPiecesState)
 }
 //ここまで移動禁止========================================================================================/
-const controleData = {
-    d: () => movePiece(1, 0),
-    a: () => movePiece(-1, 0),
-    s: () => movePiece(0, 1),
-    j: () => rotatePiece(-1),
-    k: () => rotatePiece(1),
-    h: () => hold(),
-    w: () => hardDrop(),
+const controlData = {
+    KeyD: () => movePiece(1, 0),
+    KeyA: () => movePiece(-1, 0),
+    KeyS: () => movePiece(0, 1),
+    KeyJ: () => rotatePiece(-1),
+    KeyK: () => rotatePiece(1),
+    Space: () => hold(),
+    KeyW: () => hardDrop(),
     Escape: () => resetGame(),
-    p: () => pause(),
+    KeyP: () => pause(),
 };
 
 //数値
@@ -79,21 +80,27 @@ const config = {
         line4: 800,
     }
 };
+//level計算　
+const levelCount = () => {
+    const line = state.game.clearedLine;
+    state.game.level = Math.min(Math.floor(line / 10) + 1, 20)
+    const board = document.getElementById('level');
+    board.textContent = state.game.level
+}
+
 //スコア計算
 const scoreCount = () => {
     const score = config.score[`line${state.piece.line}`];
     state.game.score += score;
-
-    const bord = document.getElementById('score');
-    bord.textContent = String(state.game.score).padStart(9, 0);
+    const board = document.getElementById('score');
+    board.textContent = state.game.score
 
 }
 //line消去数計算
 const clearedLineCount = () => {
     const clearedLine = state.game.clearedLine;
-    const bord = document.getElementById('line');
-
-    bord.textContent = (clearedLine)
+    const board = document.getElementById('line');
+    board.textContent = (clearedLine)
 }
 
 // 色
@@ -406,7 +413,18 @@ const lockCountMinus = () => {
     }
 }
 
-
+const fixPiece = () => {
+    lockTimerReset();
+    lockPiece();
+    lineBreak();
+    scoreCount();
+    levelCount();
+    clearedLineCount();
+    resetPiece();
+    piece = spawnPiece();
+    checkRespawn()
+    dropTimerReset();
+}
 
 //落下処理
 
@@ -423,42 +441,18 @@ const lock = () => {
 
     //ハードドロップ
     if (state.piece.hardDrop === true) {
-        lockTimerReset();
-        lockPiece();
-        lineBreak();
-        scoreCount();
-        clearedLineCount();
-        resetPiece();
-        piece = spawnPiece();
-        checkRespawn()
-        dropTimerReset();
+        fixPiece();
         return;
     }
     //ブロックと接触してるとき
     if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
         if (state.piece.lockCount <= 0) {
-            lockTimerReset();
-            lockPiece();
-            lineBreak();
-            scoreCount();
-            clearedLineCount();
-            resetPiece();
-            piece = spawnPiece();
-            checkRespawn()
-            dropTimerReset();
-
+            fixPiece();
             return;
         };
         if (state.piece.lockTimer === null) {
             state.piece.lockTimer = setTimeout(() => {
-                lockPiece();
-                lineBreak();
-                scoreCount();
-                clearedLineCount();
-                resetPiece();
-                piece = spawnPiece();
-                checkRespawn()
-                dropTimerReset();
+                fixPiece();
             }, 500);
 
         }
@@ -478,12 +472,12 @@ const lockPiece = () => {
     for (let y = 0; y < shape.length; y++) {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
-                const targetY = piece.y + y;
                 const targetX = piece.x + x;
+                const targetY = piece.y + y;
+
 
                 if (targetY >= 0) {
                     field[targetY][targetX] = piece.type;
-                    field[piece.y + y][piece.x + x] = piece.type
                 }
             }
         }
@@ -516,14 +510,16 @@ const lineBreak = () => {
 //ゲーム中断処理
 const text1 = document.getElementById('text1');
 const text2 = document.getElementById('text2');
+const text3 = document.getElementById('text3');
 const message = document.getElementById('message');
 //ゲームオーバー
 
 const gameOver = () => {
     state.game.isGameOver = true;
     message.classList.remove('none');
-    text1.textContent = 'ここにスコア入れる';
-    text2.textContent = 'Escキーでリトライ'
+    text1.textContent = 'score'
+    text2.textContent = state.game.score;
+    text3.textContent = 'Escキーでリトライ';
 }
 
 
@@ -535,7 +531,8 @@ const pause = () => {
     state.game.isPaused = !state.game.isPaused;
     message.classList.toggle('none');
     text1.textContent = 'PAUSE';
-    text2.textContent = 'pキーでPAUSE解除'
+    text2.textContent = 'pキーでPAUSE解除';
+    text3.textContent = 'Escキーでリトライ';
 }
 
 
@@ -546,38 +543,47 @@ const pause = () => {
 
 // 操作
 const keyState = {
-    d: false,
-    a: false,
-    s: false
+    KeyD: false,
+    KeyA: false,
+    KeyS: false
 }
 
 
-const holdDelayTimer = {
-    d: null,
-    a: null,
-    s: null
+const delayTimer = {
+    KeyD: null,
+    KeyA: null,
+    KeyS: null
 }
 
 
 // 操作
-const controle = () => {
+const control = () => {
 
     document.addEventListener("keydown", (e) => {
 
-        if (!Object.hasOwn(controleData, e.key)) return;
+        if (!Object.hasOwn(controlData, e.code)) return;
         e.preventDefault();
         if (e.repeat) return;
 
-        controleData[e.key]();
+        controlData[e.code]();
+        if (e.code === 'KeyA') {
+            keyState.KeyD = false;
+            clearTimeout(delayTimer.KeyD);
+            delayTimer.KeyD = null;
+        } else if (e.code === 'KeyD') {
+            keyState.KeyA = false;
+            clearTimeout(delayTimer.KeyA);
+            delayTimer.KeyA = null;
+        }
 
-        if (e.key === 'd' || e.key === 'a' || e.key === 's') {
+        if (e.code === 'KeyD' || e.code === 'KeyA' || e.code === 'KeyS') {
 
-            if (holdDelayTimer[e.key]) {
-                clearTimeout(holdDelayTimer[e.key]);
+            if (delayTimer[e.code] !== null) {
+                clearTimeout(delayTimer[e.code]);
             }
 
-            holdDelayTimer[e.key] = setTimeout(() => {
-                keyState[e.key] = true;
+            delayTimer[e.code] = setTimeout(() => {
+                keyState[e.code] = true;
             }, 300);
         }
     });
@@ -585,23 +591,23 @@ const controle = () => {
 
     document.addEventListener("keyup", (e) => {
 
-        if (!Object.hasOwn(keyState, e.key)) return;
+        if (!Object.hasOwn(keyState, e.code)) return;
 
-        keyState[e.key] = false;
+        keyState[e.code] = false;
 
-        clearTimeout(holdDelayTimer[e.key]);
-        holdDelayTimer[e.key] = null;
+        clearTimeout(delayTimer[e.code]);
+        delayTimer[e.code] = null;
     });
 
 
-    if (state.piece.controleInterval === null) {
+    if (state.piece.controlInterval === null) {
 
-        state.piece.controleInterval = setInterval(() => {
+        state.piece.controlInterval = setInterval(() => {
 
             for (const key in keyState) {
 
                 if (keyState[key]) {
-                    controleData[key]();
+                    controlData[key]();
                 }
             }
         }, 32);
@@ -864,7 +870,7 @@ const drawGhost = () => {
         rotation: piece.rotation
     }
 
-    while (!collision(ghost.x, ghost.y + 1, piece.type, ghost.rotation)) {
+    while (!collision(ghost.x, ghost.y + 1, ghost.type, ghost.rotation)) {
         ghost.y++
     }
 
@@ -905,7 +911,7 @@ let blockContainer = blockShuffle();
 let piece = spawnPiece();
 dropTimerReset();
 setInterval(lock, 16);
-controle()
+control()
 
 const resetGame = () => {
     resetState();
@@ -923,5 +929,5 @@ const resetGame = () => {
     message.classList.add('none');
 }
 
-//今後　スコア追加　移動じの左右ブレ解消　
+//今後　　移動じの左右ブレ解消　
 
