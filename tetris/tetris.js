@@ -10,6 +10,7 @@ const state = {
         holdPiece: null,
         isGameOver: false,
         isPaused: false,
+        isStarted: false,
         dropTimer: null,
         score: 0,
         clearedLine: 0,
@@ -17,13 +18,10 @@ const state = {
     },
     piece: {
         canHold: true,
-        hardDrop: false,
-        moved: false,
         lockTimer: null,
         lockCount: 15,
         controlInterval: null,
         line: 0,
-
     }
 
 }
@@ -53,6 +51,7 @@ const controlData = {
     KeyW: () => hardDrop(),
     Escape: () => resetGame(),
     KeyP: () => pause(),
+    Enter: () => gameStart(),
 };
 
 //数値
@@ -80,28 +79,6 @@ const config = {
         line4: 800,
     }
 };
-//level計算　
-const levelCount = () => {
-    const line = state.game.clearedLine;
-    state.game.level = Math.min(Math.floor(line / 10) + 1, 20)
-    const board = document.getElementById('level');
-    board.textContent = state.game.level
-}
-
-//スコア計算
-const scoreCount = () => {
-    const score = config.score[`line${state.piece.line}`];
-    state.game.score += score;
-    const board = document.getElementById('score');
-    board.textContent = state.game.score
-
-}
-//line消去数計算
-const clearedLineCount = () => {
-    const clearedLine = state.game.clearedLine;
-    const board = document.getElementById('line');
-    board.textContent = (clearedLine)
-}
 
 // 色
 const colorData = {
@@ -119,7 +96,17 @@ const colorData = {
         stroke: "black"
     }
 };
-
+//落下速度
+const speed = [
+    1000, 900, 800, 700, 600,
+    500, 420, 360, 300, 250,
+    210, 180, 160, 140, 120,
+    100, 90, 80, 70, 60,
+    55, 50, 45, 40, 35,
+    30, 25, 20, 15, 10,
+    8, 7, 6, 5, 4,
+    3, 2, 1, 1, 1
+];
 // srs
 const srs = {
     "0to1": [[0, 0], [-1, 0], [-1, -1], [0, 2], [-1, 2]],
@@ -350,8 +337,6 @@ const blockShuffle = () => {
     return randBlock
 }
 
-
-
 //ミノの出現　
 const spawnPiece = () => {
     while (blockContainer.length < 6) {
@@ -368,6 +353,28 @@ const spawnPiece = () => {
         rotation: 0
     }
 };
+
+//level更新
+const levelCount = () => {
+    const line = state.game.clearedLine;
+    state.game.level = Math.min(Math.floor(line / 10) + 1, 999)
+    const board = document.getElementById('level');
+    board.textContent = state.game.level
+}
+//スコア更新
+const scoreCount = () => {
+    const score = config.score[`line${state.piece.line}`];
+    state.game.score = Math.min(state.game.score + score * Math.min(state.game.level, 30), 99999999)
+    const board = document.getElementById('score');
+    board.textContent = state.game.score.toLocaleString('ja-JP')
+
+}
+//line消去数
+const clearedLineCount = () => {
+    const clearedLine = Math.min(state.game.clearedLine, 9999)
+    const board = document.getElementById('line');
+    board.textContent = (clearedLine)
+}
 
 
 //衝突判定
@@ -397,55 +404,38 @@ const collision = (nx, ny, type, nrota) => {
 //dropタイマーをリセット
 const dropTimerReset = () => {
     clearInterval(state.game.dropTimer);
-    state.game.dropTimer = setInterval(drop, 1000);
+    const level = Math.min(state.game.level, speed.length);
+    state.game.dropTimer = setInterval(drop, speed[level - 1]);
 }
+
 // lockTimerをリセット
 const lockTimerReset = () => {
     clearTimeout(state.piece.lockTimer);
     state.piece.lockTimer = null;
-
 }
 
 //lockCountを減少
 const lockCountMinus = () => {
-    if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
+    if (collision(currentPiece.x, currentPiece.y + 1, currentPiece.type, currentPiece.rotation)) {
         state.piece.lockCount--;
     }
-}
-
-const fixPiece = () => {
-    lockTimerReset();
-    lockPiece();
-    lineBreak();
-    scoreCount();
-    levelCount();
-    clearedLineCount();
-    resetPiece();
-    piece = spawnPiece();
-    checkRespawn()
-    dropTimerReset();
 }
 
 //落下処理
 
 const drop = () => {
-    if (state.game.isPaused || state.game.isGameOver) return;
+    if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
-    if (!collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-        piece.y++
+    if (!collision(currentPiece.x, currentPiece.y + 1, currentPiece.type, currentPiece.rotation)) {
+        currentPiece.y++
     }
 }
-
+//固定
 const lock = () => {
-    if (state.game.isPaused || state.game.isGameOver) return;
+    if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
-    //ハードドロップ
-    if (state.piece.hardDrop === true) {
-        fixPiece();
-        return;
-    }
     //ブロックと接触してるとき
-    if (collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
+    if (collision(currentPiece.x, currentPiece.y + 1, currentPiece.type, currentPiece.rotation)) {
         if (state.piece.lockCount <= 0) {
             fixPiece();
             return;
@@ -461,23 +451,33 @@ const lock = () => {
     }
 }
 
+const fixPiece = () => {
+    lockTimerReset();
+    lockPiece();
+    lineBreak();
+    scoreCount();
+    levelCount();
+    clearedLineCount();
+    resetPiece();
+    currentPiece = spawnPiece();
+    checkRespawn()
+    dropTimerReset();
+}
 
-
-//ミノをfieldに固定
 
 const lockPiece = () => {
 
-    const shape = blockData[piece.type][piece.rotation];
+    const shape = blockData[currentPiece.type][currentPiece.rotation];
 
     for (let y = 0; y < shape.length; y++) {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
-                const targetX = piece.x + x;
-                const targetY = piece.y + y;
+                const targetX = currentPiece.x + x;
+                const targetY = currentPiece.y + y;
 
 
                 if (targetY >= 0) {
-                    field[targetY][targetX] = piece.type;
+                    field[targetY][targetX] = currentPiece.type;
                 }
             }
         }
@@ -487,22 +487,22 @@ const lockPiece = () => {
 // ライン消去
 
 const lineBreak = () => {
-    const breakedLine = [];
+    const clearLines = [];
 
     for (let y = 0; y < field.length; y++) {
         if (!field[y].includes(0)) {
-            breakedLine.push(y)
+            clearLines.push(y)
         }
     }
 
-    state.piece.line = breakedLine.length;
-    state.game.clearedLine += breakedLine.length
+    state.piece.line = clearLines.length;
+    state.game.clearedLine += clearLines.length
 
-    for (let i = breakedLine.length - 1; i >= 0; i--) {
-        field.splice(breakedLine[i], 1);
+    for (let i = clearLines.length - 1; i >= 0; i--) {
+        field.splice(clearLines[i], 1);
 
     }
-    for (let n = 0; n < breakedLine.length; n++) {
+    for (let n = 0; n < clearLines.length; n++) {
         field.unshift(Array(config.field.width).fill(0))
     }
 }
@@ -512,8 +512,17 @@ const text1 = document.getElementById('text1');
 const text2 = document.getElementById('text2');
 const text3 = document.getElementById('text3');
 const message = document.getElementById('message');
-//ゲームオーバー
 
+
+const gameStart = () => {
+    if (state.game.isStarted) return;
+
+    state.game.isStarted = true;
+    message.classList.add('none');
+    dropTimerReset();
+}
+
+//ゲームオーバー
 const gameOver = () => {
     state.game.isGameOver = true;
     message.classList.remove('none');
@@ -521,21 +530,15 @@ const gameOver = () => {
     text2.textContent = state.game.score;
     text3.textContent = 'Escキーでリトライ';
 }
-
-
-
-
 //ポｰズ　
 const pause = () => {
-    if (state.game.isGameOver) return;
+    if (state.game.isGameOver || !state.game.isStarted) return;
     state.game.isPaused = !state.game.isPaused;
     message.classList.toggle('none');
     text1.textContent = 'PAUSE';
     text2.textContent = 'pキーでPAUSE解除';
     text3.textContent = 'Escキーでリトライ';
 }
-
-
 
 /*=============================================
 ゲーム進行
@@ -555,8 +558,6 @@ const delayTimer = {
     KeyS: null
 }
 
-
-// 操作
 const control = () => {
 
     document.addEventListener("keydown", (e) => {
@@ -617,14 +618,14 @@ const control = () => {
 
 //移動
 const movePiece = (x, y) => {
-    if (state.game.isPaused || state.game.isGameOver) return;
+    if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
-    const nx = piece.x + x;
-    const ny = piece.y + y;
+    const nx = currentPiece.x + x;
+    const ny = currentPiece.y + y;
 
-    if (!collision(nx, ny, piece.type, piece.rotation)) {
-        piece.x = nx
-        piece.y = ny;
+    if (!collision(nx, ny, currentPiece.type, currentPiece.rotation)) {
+        currentPiece.x = nx
+        currentPiece.y = ny;
         lockCountMinus();
         lockTimerReset();
     }
@@ -632,23 +633,23 @@ const movePiece = (x, y) => {
 
 //ハードドロップ
 const hardDrop = () => {
-    if (state.game.isPaused || state.game.isGameOver) return;
+    if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
-    while (!collision(piece.x, piece.y + 1, piece.type, piece.rotation)) {
-        piece.y++;
+    while (!collision(currentPiece.x, currentPiece.y + 1, currentPiece.type, currentPiece.rotation)) {
+        currentPiece.y++;
     }
-    state.piece.hardDrop = true
+    fixPiece();
 }
 
 
 //回転
 const rotatePiece = (n) => {
-    if (state.game.isPaused || state.game.isGameOver) return;
+    if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
-    const nrota = (piece.rotation + n + 4) % 4;
-    const s = `${piece.rotation}to${nrota}`;
+    const nrota = (currentPiece.rotation + n + 4) % 4;
+    const s = `${currentPiece.rotation}to${nrota}`;
 
-    const Key = (piece.type === "I") ?
+    const Key = (currentPiece.type === "I") ?
         srsI :
         srs;
 
@@ -656,10 +657,10 @@ const rotatePiece = (n) => {
         const sx = Key[s][i][0];
         const sy = Key[s][i][1]
 
-        if (!collision(piece.x + sx, piece.y + sy, piece.type, nrota)) {
-            piece.x += sx;
-            piece.y += sy;
-            piece.rotation = nrota;
+        if (!collision(currentPiece.x + sx, currentPiece.y + sy, currentPiece.type, nrota)) {
+            currentPiece.x += sx;
+            currentPiece.y += sy;
+            currentPiece.rotation = nrota;
             lockCountMinus();
             lockTimerReset();
             return;
@@ -668,16 +669,10 @@ const rotatePiece = (n) => {
 
 }
 
-const checkRespawn = () => {
-    if (collision(piece.x, piece.y, piece.type, piece.rotation)) {
-        gameOver();
-    }
-}
-
 //　ホールド
 
 const hold = () => {
-    if (state.game.isPaused || state.game.isGameOver) return;
+    if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
     if (state.piece.canHold === false) return;
 
@@ -694,8 +689,8 @@ const hold = () => {
             state.piece.canHold = false;
             return;
         }
-        state.game.holdPiece = piece.type;
-        piece = spawnPiece();
+        state.game.holdPiece = currentPiece.type;
+        currentPiece = spawnPiece();
 
         checkRespawn();
     } else {
@@ -710,9 +705,9 @@ const hold = () => {
             return;
         }
 
-        state.game.holdPiece = piece.type;
+        state.game.holdPiece = currentPiece.type;
 
-        piece = {
+        currentPiece = {
             x: config.piece.spawnX,
             y: box === 'I' ?
                 config.piece.ISpawnY : config.piece.spawnY,
@@ -721,8 +716,35 @@ const hold = () => {
         };
     }
     state.piece.canHold = false;
+    state.piece.lockCount = 15;
+    lockTimerReset();
     dropTimerReset();
 }
+//ゲームオーバー判定
+const checkRespawn = () => {
+    if (collision(currentPiece.x, currentPiece.y, currentPiece.type, currentPiece.rotation)) {
+        gameOver();
+    }
+}
+
+//ゲームリセット
+const resetGame = () => {
+    resetState();
+    levelCount();
+    scoreCount();
+    clearedLineCount();
+    for (let y = 0; y < field.length; y++) {
+        field[y].fill(0);
+    }
+
+    blockContainer = blockShuffle();
+    currentPiece = spawnPiece();
+    text1.textContent = "TETRIS";
+    text2.textContent = "Press Enter";
+    text3.textContent = "Start";
+    message.classList.remove('none');
+}
+
 
 
 /*==================================================================
@@ -769,18 +791,18 @@ const drawGrid = () => {
 
 // ミノ描画
 const drawPiece = () => {
-    fieldCtx.fillStyle = colorData.block[piece.type];
+    fieldCtx.fillStyle = colorData.block[currentPiece.type];
     fieldCtx.strokeStyle = colorData.piece.stroke;
 
-    const shape = blockData[piece.type][piece.rotation];
+    const shape = blockData[currentPiece.type][currentPiece.rotation];
     const hidden = config.field.hiddenHeight;
 
     for (let y = 0; y < shape.length; y++) {
         for (let x = 0; x < shape[y].length; x++) {
             if (shape[y][x] === 1) {
 
-                const drawX = (piece.x + x) * config.cellSize
-                const drawY = (piece.y + y - hidden) * config.cellSize
+                const drawX = (currentPiece.x + x) * config.cellSize
+                const drawY = (currentPiece.y + y - hidden) * config.cellSize
 
                 fieldCtx.fillRect(drawX, drawY, config.cellSize, config.cellSize);
                 fieldCtx.strokeRect(drawX, drawY, config.cellSize, config.cellSize);
@@ -860,14 +882,13 @@ const drawNext = () => {
 }
 
 //ゴーストミノ描画
-
 const drawGhost = () => {
 
     let ghost = {
-        x: piece.x,
-        y: piece.y,
-        type: piece.type,
-        rotation: piece.rotation
+        x: currentPiece.x,
+        y: currentPiece.y,
+        type: currentPiece.type,
+        rotation: currentPiece.rotation
     }
 
     while (!collision(ghost.x, ghost.y + 1, ghost.type, ghost.rotation)) {
@@ -895,8 +916,7 @@ const drawGhost = () => {
     fieldCtx.restore();
 }
 
-
-setInterval(() => {
+const drawAll = () => {
     fieldCtx.clearRect(0, 0, fieldCanvas.width, fieldCanvas.height)
     drawField();
     drawGrid();
@@ -904,30 +924,16 @@ setInterval(() => {
     drawGhost()
     drawNext();
     drawHold();
-}, 16)
-
-
-let blockContainer = blockShuffle();
-let piece = spawnPiece();
-dropTimerReset();
-setInterval(lock, 16);
-control()
-
-const resetGame = () => {
-    resetState();
-
-    for (let y = 0; y < field.length; y++) {
-        field[y].fill(0);
-    }
-
-    blockContainer = blockShuffle();
-
-    piece = spawnPiece();
-
-    dropTimerReset();
-
-    message.classList.add('none');
+    requestAnimationFrame(drawAll)
 }
 
-//今後　　移動じの左右ブレ解消　
+/*======================================
+初期化
+===============================*/
 
+let blockContainer = blockShuffle();
+let currentPiece = spawnPiece();
+
+setInterval(lock, 16);
+control();
+drawAll()
