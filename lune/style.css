@@ -15,8 +15,8 @@ img {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     z-index: -100;
 }
 
@@ -32,7 +32,7 @@ img {
 }
 
 .star.move {
-    transform: rotate(-55deg) translateX(-160vw);
+    transform: rotate(-55deg) translateX(-160dvw);
     transition: transform 4s;
 }
 
@@ -82,12 +82,12 @@ img {
     left: 0;
     display: none;
     justify-content: space-between;
-    width: 100vw;
+    width: 100dvw;
     height: 30px;
 }
 
 .rain.drop {
-    transform: translateY(100vh);
+    transform: translateY(100dvh);
     transition: 0.5s;
 }
 
@@ -110,7 +110,7 @@ a {
 }
 
 section {
-    width: 60vw;
+    width: 60dvw;
     margin-top: 200px;
     background-color: #2b2b2a;
     padding: 50px;
@@ -180,13 +180,14 @@ header
 */
 
 .mainvisual {
-    background-image: url(img/mainvisual.avif);
+    background-image: url(img/mainvisual.png);
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.3);
     background-blend-mode: multiply;
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 100dvh;
+
     transition: background-color 0.5s ease;
 }
 
@@ -253,7 +254,7 @@ header
 
 .site-title {
     font-weight: 500;
-    font-size: clamp(90px, 12vw, 300px);
+    font-size: clamp(90px, 12dvw, 300px);
     transform: translateY(30px);
     animation: fadeUp 1.5s ease forwards;
     opacity: 0;
@@ -261,7 +262,7 @@ header
 
 .sub-title {
     font-weight: 400;
-    font-size: clamp(30px, 4vw, 100px);
+    font-size: clamp(30px, 4dvw, 100px);
     transform: translateY(30px);
     animation: fadeUp 1.5s ease forwards;
     animation-delay: 0.5s;
@@ -496,8 +497,20 @@ body.light .umbrella.disappear {
 
 
 /*sumaho*/
+@media(max-width:1249px) {
+    h4 {
+        align-self: center;
+    }
+}
 
-@media(max-width:1068px) {
+@media (max-width:1000px) {
+    section {
+        width: 90dvw;
+        padding: 30px;
+    }
+}
+
+@media(max-width:850px) {
 
     .hamburger {
         display: flex;
@@ -557,8 +570,8 @@ body.light .umbrella.disappear {
         position: fixed;
         top: 0;
         right: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100dvw;
+        height: 100dvh;
         background-color: #000;
         transform: translateX(100%);
         opacity: 0;
@@ -586,4 +599,26 @@ body.light .umbrella.disappear {
     }
 
 
+}
+
+@media(max-width:600px) {
+    section {
+        margin-top: 30px;
+    }
+
+    .flex img,
+    .set-img img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    h3 {
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+
+    .news-item {
+        flex-direction: column;
+    }
 }
