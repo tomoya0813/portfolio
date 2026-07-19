@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 .container {
@@ -89,4 +90,18 @@ canvas {
 #message.none,
 .none {
     display: none;
+}
+
+#level-setting {
+    font-size: 2rem;
+}
+
+label {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+#start-level {
+    width: 200px;
 }
