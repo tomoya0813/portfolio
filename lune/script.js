@@ -18,26 +18,6 @@ const closeMenu = () => {
 hamburger.addEventListener('click', toggleMenu);
 menu.addEventListener('click', closeMenu);
 
-/*starアニメーション 没　規則的すぎる
-const star = document.querySelectorAll('.star');
-
-const starMove = () => {
-    star.forEach(item => {
-        if (item.classList.contains('move')) {
-            return;
-        } else if (Math.random() < 0.25) {
-            item.classList.add('move');
-
-            setTimeout(() => {
-                item.classList.remove('move');
-            }, 1000);
-        };
-
-    });
-};
-setInterval(starMove, 2000);
-*/
-
 /*star*/
 const star = document.querySelectorAll('.star');
 const starMove = () => {
