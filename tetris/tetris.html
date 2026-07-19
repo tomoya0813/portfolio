@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="純粋なJavaScript/Canvasで実装した、Webで遊べる本格テトリス。SRSによる壁キックや快適な操作性を完全再現。">
     <link rel="stylesheet" href="tetris.css">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Cpath d='M1 3h15v5H11v5H6V8H1Z' fill='%23000000'/%3E%3Cpath d='M2 4h3v3h-3ZM7 4h3v3h-3ZM12 4h3v3h-3ZM7 9h3v3h-3Z' fill='%23A000F0'/%3E%3Cpath d='M2 4h3v1h-2v2h-1ZM7 4h3v1h-2v2h-1ZM12 4h3v1h-2v2h-1ZM7 9h3v1h-2v2h-1Z' fill='%23D280FF'/%3E%3C/svg%3E">
     <title>テトリス</title>
 </head>
 
@@ -65,13 +68,14 @@
                 <dd id="level">1</dd>
             </dl>
 
-            <div id="message" class="">
+            <div id="message">
                 <p id="text1" class="text">TETRIS</p>
                 <p id="text2" class="text">Press Enter</p>
                 <p id="text3" class="text">Start</p>
                 <div id="level-setting">
-                    <label for="start-level">開始level<span id="level-value">1</span></label>
-                    <input type="range" id="start-level" name="level" min="1" max="20" step="1" list="slider-markers">
+                    <label for="start-level" class="text">開始level<span id="level-value" class="text">1</span></label>
+                    <input type="range" id="start-level" name="level" min="1" max="20" step="1" list="slider-markers"
+                        value="1">
 
                     <datalist id="slider-markers">
                         <option value="1"></option>
@@ -86,7 +90,8 @@
         </div>
 
     </div>
+    <script src="tetris.js"></script>
 </body>
-<script src="tetris.js"></script>
+
 
 </html>
