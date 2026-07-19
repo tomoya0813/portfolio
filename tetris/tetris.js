@@ -15,6 +15,7 @@ const state = {
         score: 0,
         clearedLine: 0,
         level: 1,
+        startLevel: 1
     },
     piece: {
         canHold: true,
@@ -22,6 +23,7 @@ const state = {
         lockCount: 15,
         controlInterval: null,
         line: 0,
+        isFixed: false
     }
 
 }
@@ -77,6 +79,7 @@ const config = {
         line2: 300,
         line3: 500,
         line4: 800,
+        maxScoreLevel: 30
     }
 };
 
@@ -312,7 +315,7 @@ const blockData = {
 
 const field = Array.from({ length: config.field.height }, () => Array(config.field.width).fill(0))
 
-//フィールドデバック用　x座標 y座標　typeで指定マスを埋める
+//フィールドデバック用　x座標 y座標　typeで指定マスをtypeの色で埋める
 const dF = (x, y, type) => {
     field[y - 1][x - 1] = `${type}`
 }
@@ -357,26 +360,27 @@ const spawnPiece = () => {
 //level更新
 const levelCount = () => {
     const line = state.game.clearedLine;
-    state.game.level = Math.min(Math.floor(line / 10) + 1, 999)
-    const board = document.getElementById('level');
-    board.textContent = state.game.level
+    state.game.level = state.game.startLevel - 1 + Math.min(Math.floor(line / 10) + 1, 999)
 }
+
 //スコア更新
 const scoreCount = () => {
     const score = config.score[`line${state.piece.line}`];
-    state.game.score = Math.min(state.game.score + score * Math.min(state.game.level, 30), 99999999)
-    const board = document.getElementById('score');
-    board.textContent = state.game.score.toLocaleString('ja-JP')
-
+    state.game.score = Math.min(state.game.score + score * Math.min(state.game.level, config.score.maxScoreLevel), 99999999)
 }
-//line消去数
-const clearedLineCount = () => {
-    const clearedLine = Math.min(state.game.clearedLine, 9999)
-    const board = document.getElementById('line');
-    board.textContent = (clearedLine)
+//別タブ時のポーズ
+const windowBlur = () => {
+    window.addEventListener('blur', () => {
+        if (state.game.isStarted && !state.game.isGameOver && !state.game.isPaused) {
+            pause();
+        }
+        for (const key in keyState) {
+            keyState[key] = false;
+            clearTimeout(delayTimer[key]);
+            delayTimer[key] = null;
+        }
+    })
 }
-
-
 //衝突判定
 const collision = (nx, ny, type, nrota) => {
 
@@ -432,6 +436,7 @@ const drop = () => {
 }
 //固定
 const lock = () => {
+    if (state.piece.isFixed) return;
     if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
     //ブロックと接触してるとき
@@ -452,12 +457,14 @@ const lock = () => {
 }
 
 const fixPiece = () => {
+    if (state.piece.isFixed) return;
+    state.piece.isFixed = true;
+
     lockTimerReset();
     lockPiece();
     lineBreak();
     scoreCount();
     levelCount();
-    clearedLineCount();
     resetPiece();
     currentPiece = spawnPiece();
     checkRespawn()
@@ -512,19 +519,23 @@ const text1 = document.getElementById('text1');
 const text2 = document.getElementById('text2');
 const text3 = document.getElementById('text3');
 const message = document.getElementById('message');
+const levelRange = document.getElementById('level-setting')
 
-
+//スタート画面
 const gameStart = () => {
     if (state.game.isStarted) return;
-
+    levelRange.classList.remove('none')
     state.game.isStarted = true;
+    state.game.level = state.game.startLevel
     message.classList.add('none');
+
     dropTimerReset();
 }
 
 //ゲームオーバー
 const gameOver = () => {
     state.game.isGameOver = true;
+    levelRange.classList.add('none')
     message.classList.remove('none');
     text1.textContent = 'score'
     text2.textContent = state.game.score;
@@ -534,10 +545,17 @@ const gameOver = () => {
 const pause = () => {
     if (state.game.isGameOver || !state.game.isStarted) return;
     state.game.isPaused = !state.game.isPaused;
+    levelRange.classList.add('none')
     message.classList.toggle('none');
     text1.textContent = 'PAUSE';
     text2.textContent = 'pキーでPAUSE解除';
     text3.textContent = 'Escキーでリトライ';
+
+    for (const key in keyState) {
+        keyState[key] = false;
+        clearTimeout(delayTimer[key]);
+        delayTimer[key] = null;
+    }
 }
 
 /*=============================================
@@ -624,6 +642,9 @@ const movePiece = (x, y) => {
     const ny = currentPiece.y + y;
 
     if (!collision(nx, ny, currentPiece.type, currentPiece.rotation)) {
+        if (y > 0) {
+            state.game.score += 1;
+        }
         currentPiece.x = nx
         currentPiece.y = ny;
         lockCountMinus();
@@ -633,10 +654,12 @@ const movePiece = (x, y) => {
 
 //ハードドロップ
 const hardDrop = () => {
+    if (state.piece.isFixed) return;
     if (state.game.isPaused || state.game.isGameOver || !state.game.isStarted) return;
 
     while (!collision(currentPiece.x, currentPiece.y + 1, currentPiece.type, currentPiece.rotation)) {
         currentPiece.y++;
+        state.game.score += 2
     }
     fixPiece();
 }
@@ -729,10 +752,11 @@ const checkRespawn = () => {
 
 //ゲームリセット
 const resetGame = () => {
+    levelRange.classList.remove('none');
+    document.getElementById('start-level').value = 1
     resetState();
     levelCount();
     scoreCount();
-    clearedLineCount();
     for (let y = 0; y < field.length; y++) {
         field[y].fill(0);
     }
@@ -745,6 +769,13 @@ const resetGame = () => {
     message.classList.remove('none');
 }
 
+//初期レベル設定
+const startLevelSet = () => {
+    const startLevel = document.getElementById('start-level');
+    startLevel.addEventListener('input', (e) => {
+        state.game.startLevel = Number(e.target.value)
+    })
+}
 
 
 /*==================================================================
@@ -915,6 +946,23 @@ const drawGhost = () => {
     }
     fieldCtx.restore();
 }
+//level描画
+const drawLevel = () => {
+    document.getElementById('level').textContent = state.game.level
+}
+//score描画
+const drawScore = () => {
+    document.getElementById('score').textContent = state.game.score.toLocaleString('ja-JP')
+}
+//line描画
+const drawLine = () => {
+    const clearedLine = Math.min(state.game.clearedLine, 9999);
+    document.getElementById('line').textContent = clearedLine;
+}
+
+const drawStartLevel = () => {
+    document.getElementById('level-value').textContent = state.game.startLevel
+}
 
 const drawAll = () => {
     fieldCtx.clearRect(0, 0, fieldCanvas.width, fieldCanvas.height)
@@ -924,16 +972,21 @@ const drawAll = () => {
     drawGhost()
     drawNext();
     drawHold();
+    drawLevel();
+    drawScore();
+    drawLine();
+    drawStartLevel();
     requestAnimationFrame(drawAll)
 }
 
 /*======================================
 初期化
 ===============================*/
-
+startLevelSet();
 let blockContainer = blockShuffle();
 let currentPiece = spawnPiece();
 
 setInterval(lock, 16);
 control();
-drawAll()
+drawAll();
+windowBlur();
