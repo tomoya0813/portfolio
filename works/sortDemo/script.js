@@ -8,11 +8,9 @@ const itemShuffle = () => {
     const randItem = [];
 
     for (let i = data.length; i > 0; i--) {
-
         const randNum = Math.floor(Math.random() * i);
         randItem.push(numBox[randNum]);
         numBox.splice(randNum, 1)
-
     }
     return randItem
 }
@@ -23,9 +21,10 @@ const BubbleSort = () => {
     let swapCount = 0;
     let compareCount = 0;
     let end = shuffledArray.length - 1;
-
     let swapped = true;
+
     while (swapped) {
+
         swapped = false;
 
         for (let j = 0; j < end; j++) {
@@ -45,23 +44,17 @@ const BubbleSort = () => {
 }
 
 const SelectionSort = () => {
-    let swapCount = 0;
-    let compareCount = 0;
-
-    for (let i = 0; i < shuffledArray.length; i++) {
-        let min = shuffledArray[0];
+    for (let i = 0; i < shuffledArray.length - 1; i++) {
         let minIndex = i;
-
-        for (let j = 0; j < shuffledArray.length; j++) {
-            if (min >= shuffledArray[j]) {
-                min = shuffledArray[j]
-                minIndex = j;
+        for (let j = i + 1; j < shuffledArray.length; j++) {
+            if (shuffledArray[minIndex] > shuffledArray[j]) {
+                minIndex = j
             }
         }
         [shuffledArray[i], shuffledArray[minIndex]] = [shuffledArray[minIndex], shuffledArray[i]]
-
     }
-
-    return shuffledArray
 }
-SelectionSort()
+
+console.log('前', shuffledArray)
+console.log('後', shuffledArray)
+
