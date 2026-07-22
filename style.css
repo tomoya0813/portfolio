@@ -4,7 +4,8 @@
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
-    color: #000000;
+    color: white;
+    mix-blend-mode: difference;
     font-family: "Oswald", sans-serif;
 }
 
@@ -17,12 +18,18 @@ header {
     justify-content: space-between;
     height: 20vh;
     padding: 50px 80px;
-    font-size: 30px;
+    font-size: 40px;
 }
 
-nav {
+.page-nav {
     display: flex;
     gap: 80px;
+    transition: border 2s ease;
+    background: red;
+}
+
+.page-nav li:hover {
+    border-bottom: 5px solid white;
 }
 
 .main-wrapper,
@@ -67,7 +74,7 @@ nav {
 }
 
 .triangle {
-    background: #000000;
+    background: white;
     width: 150vw;
     height: 130vh;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
@@ -76,9 +83,17 @@ nav {
     left: -115%;
     top: 45%;
     z-index: -1;
+    color: white
 }
 
 .main-title,
 .name {
     mix-blend-mode: difference;
+}
+
+.bar {
+    display: block;
+    width: 30px;
+    height: 10px;
+    background: black;
 }
