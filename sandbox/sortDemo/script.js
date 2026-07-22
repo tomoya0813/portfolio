@@ -1,5 +1,5 @@
 const data = {
-    length: 1000,
+    length: 20,
 }
 
 const itemShuffle = () => {
@@ -14,8 +14,6 @@ const itemShuffle = () => {
     }
     return randItem
 }
-
-let shuffledArray = itemShuffle()
 
 const BubbleSort = () => {
     let swapCount = 0;
@@ -39,7 +37,7 @@ const BubbleSort = () => {
         }
         end--
     }
-    console.table(`比較回数:${compareCount}`, `交換回数:${swapCount}`, `結果${shuffledArray}`,)
+    console.table(`比較回数:${compareCount}`, `交換回数:${swapCount}`, `結果${shuffledArray}`)
     return shuffledArray
 }
 
@@ -55,6 +53,32 @@ const SelectionSort = () => {
     }
 }
 
-console.log('前', shuffledArray)
-console.log('後', shuffledArray)
+const insertionSort = () => {
+
+    for (let i = 1; i < shuffledArray.length; i++) {
+        const currentIndex = shuffledArray[i];
+        let changeIndex = i
+
+        for (let j = i - 1; j >= 0; j--) {
+
+            if (shuffledArray[j] < shuffledArray[i]) {
+                break;
+            }
+            changeIndex = j + 1
+        }
+        splice(currentIndex, 1);
+        splice(changeIndex, 0, currentIndex)
+
+    }
+}
+// console.table(`比較回数:${compareCount}`, `交換回数:${swapCount}`, `結果${shuffledArray}`,)
+
+
+//====================================================================
+let shuffledArray = itemShuffle()
+console.log('ソート前', shuffledArray)
+//BubbleSort();
+//SelectionSort ();
+insertionSort()
+console.log('ソート後', shuffledArray)
 
