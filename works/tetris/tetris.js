@@ -988,12 +988,13 @@ drawAll();
 windowBlur();
 
 // デバック関数
-console.log('DEBUG = trueでデバックモード有効', 'dl(number)で開始時のレベルを指定。')
 let DEBUG = false;
+console.log('DEBUG = trueでデバックモード有効', `dl(number)で開始時のレベルを指定。(1〜${speed.length})`);
+
 const dl = (num) => {
     if (!DEBUG) {
         console.log('DEBUG = true を実行してください。')
         return
     }
-    state.game.startLevel = Math.max(1, Math.min(num, 40));
+    state.game.startLevel = Math.max(1, Math.min(num, speed.length));
 }
