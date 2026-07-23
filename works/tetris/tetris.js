@@ -1,7 +1,7 @@
+'use strict'
 /*======================================================
   データ
 =========================================================*/
-
 
 //コピー作成のためここから移動禁止======================================================================================
 //操作
@@ -315,10 +315,6 @@ const blockData = {
 
 const field = Array.from({ length: config.field.height }, () => Array(config.field.width).fill(0))
 
-//フィールドデバック用　x座標 y座標　typeで指定マスをtypeの色で埋める
-const dF = (x, y, type) => {
-    field[y - 1][x - 1] = `${type}`
-}
 /*======================================================
      ゲームシステム
 ======================================================*/
@@ -990,3 +986,14 @@ setInterval(lock, 16);
 control();
 drawAll();
 windowBlur();
+
+// デバック関数
+console.log('DEBUG = trueでデバックモード有効', 'dl(number)で開始時のレベルを指定。')
+let DEBUG = false;
+const dl = (num) => {
+    if (!DEBUG) {
+        console.log('DEBUG = true を実行してください。')
+        return
+    }
+    state.game.startLevel = Math.max(1, Math.min(num, 40));
+}

@@ -7,6 +7,13 @@
     scroll-behavior: smooth;
 }
 
+/* 重要========================================= */
+html,
+body {
+    overflow-x: hidden;
+}
+
+/* ===================================== */
 img {
     display: block;
 }
@@ -91,9 +98,9 @@ img {
     transition: 0.5s;
 }
 
+
 body {
     background-color: #333132;
-    overflow-x: hidden;
     color: #FFFEF9;
     transition: background-color 0.5s ease, color 0.5s ease;
 }
@@ -115,9 +122,9 @@ section {
     background-color: #2b2b2a;
     padding: 50px;
     border-radius: 20px;
-    font-size: large;
+    font-size: x-large;
+    line-height: 1.7;
     font-family: "Noto Sans JP", sans-serif;
-    align-items: center;
     gap: 40px;
     scroll-margin-top: 120px;
 }
@@ -224,12 +231,10 @@ header
     align-items: center;
     gap: 70px;
     height: 100%;
-    font-size: larger;
-
 }
 
 .nav-list a {
-    font-size: x-large;
+    font-size: xx-large;
     font-family: "Montserrat", sans-serif;
     font-weight: 200;
     padding-bottom: 5px;
@@ -508,9 +513,14 @@ body.light .umbrella.disappear {
         width: 90dvw;
         padding: 30px;
     }
-}
 
-@media(max-width:850px) {
+    .nav-list a {
+        font-size: x-large;
+    }
+
+    section {
+        font-size: large;
+    }
 
     .hamburger {
         display: flex;
@@ -598,12 +608,11 @@ body.light .umbrella.disappear {
         background-color: #333132;
     }
 
-
 }
 
 @media(max-width:600px) {
     section {
-        margin-top: 30px;
+        margin-top: 40px;
     }
 
     .flex img,
