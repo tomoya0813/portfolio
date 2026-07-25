@@ -10,34 +10,38 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Oswald:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-
     <header>
-        <p class="name">Tomoya | Web Developer</p>
-        <nav class="page-nav" aria-label="サイトナビゲーション">
-            <li><a href="#">about</a></li>
-            <li><a href="#"> works</a></li>
-            <li><a href="#">contact</a></li>
+        <p><a href="index.html" class="name inversion">Tomoya | Web Developer</a></p>
+        <nav class="page-nav" id="nav" aria-label="サイトナビゲーション">
+            <ul>
+                <li><a href="about/index.html" class="inversion">about</a></li>
+                <li><a href="works/index.html" class="inversion"> works</a></li>
+                <li><a href="contact/index.html" class="inversion">contact</a></li>
+            </ul>
         </nav>
-        <div id="btn">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
+        <button id="btn" aria-label="ナビ開閉ボタン">
+            <span class="bar inversion"></span>
+            <span class="bar inversion"></span>
+            <span class="bar inversion"></span>
+            <span class="bar inversion"></span>
+        </button>
     </header>
     <main class="hero">
-        <div class="main-wrapper">
-            <div class="triangle"></div>
-            <h1 class="main-title">THIS IS <br><span class="main-indent">ME</span></h1>
+        <div class="triangle"></div>
+        <div class="bg bg-top">
+            2026 PORTFOLIO 2026 PORTFOLIO 2026 PORTFOLIO
         </div>
-        <div class="sub-wrapper">
-            <p class="sub-title">新しい挑戦を<br><span class="sub-indent">求めています</span></p>
+        <div class="bg bg-bottom">
+            2026 PORTFOLIO 2026 PORTFOLIO 2026 PORTFOLIO
         </div>
-
+        <h1 class="main-title inversion">THIS IS <br><span class="main-indent">ME</span></h1>
+        <p class="sub-title inversion">Available for <br><span class="sub-indent">new opportunities. </span></p>
     </main>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
