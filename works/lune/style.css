@@ -466,9 +466,13 @@ body.light .mainvisual {
     background-blend-mode: multiply;
 }
 
+body.light .nav-list a {
+    color: orange;
+}
+
 body.light .nav-list a:hover {
-    color: #c58128;
-    border-bottom: 5px #c58128 solid;
+    color: orange;
+    border-bottom: 5px orange solid;
 }
 
 body.light h3 {
@@ -605,7 +609,7 @@ body.light .umbrella.disappear {
     }
 
     body.light .bar {
-        background-color: #333132;
+        background-color: orange;
     }
 
 }
@@ -629,5 +633,14 @@ body.light .umbrella.disappear {
 
     .news-item {
         flex-direction: column;
+    }
+}
+
+@media (max-height:576px) {
+    .header {
+        background-color: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: none;
     }
 }
