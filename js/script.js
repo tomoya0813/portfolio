@@ -12,12 +12,12 @@ btn.addEventListener('click', moveNav)
 //br削除
 
 const mediaQuery = window.matchMedia('(max-height : 630px)');
-const NEWbr = '<br>';
+const NEWBr = '<br>';
 const indent = document.querySelectorAll('.indent');
 
 
-const deleteBr = (e) => {
-    e.forEach((e) => {
+const deleteBr = () => {
+    document.querySelectorAll('.hero br').forEach((e) => {
         e.remove();
     })
 }
@@ -25,17 +25,19 @@ const deleteBr = (e) => {
 const addBr = () => {
 
     indent.forEach((e) => {
-        e.insertAdjacentHTML("beforebegin", NEWbr)
+        e.insertAdjacentHTML("beforebegin", NEWBr)
     });
 }
 
 const checkBr = () => {
-    const br = document.querySelectorAll('.hero br');
+
+    const hasBr = document.querySelectorAll('.hero br').length !== 0;
+
     if (mediaQuery.matches) {
-        if (br.length === 0) return;
-        deleteBr(br);
+        if (!hasBr) return;
+        deleteBr();
     } else {
-        if (br.length !== 0) return;
+        if (hasBr) return;
         addBr();
     }
 }
