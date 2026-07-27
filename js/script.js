@@ -54,7 +54,7 @@ const moveTriangle = () => {
 const navLinks = document.querySelectorAll('.page-nav li a');
 const mqNav = window.matchMedia('(max-width: 1000px)');
 
-const toggleNavlinks = () => {
+const toggleNavLinks = () => {
     navLinks.forEach((e) => {
         e.classList.toggle('inversion', !mqNav.matches);
     });
@@ -63,10 +63,10 @@ const toggleNavlinks = () => {
 window.addEventListener('DOMContentLoaded', () => {
     checkBr();
     moveTriangle();
-    toggleNavli();
+    toggleNavLinks();
 });
 
 btn.addEventListener('click', moveNav);
 mqBr.addEventListener('change', checkBr);
 mqTri.addEventListener('change', moveTriangle);
-mqNav.addEventListener('change', toggleNavli);
+mqNav.addEventListener('change', toggleNavLinks);
