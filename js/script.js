@@ -59,6 +59,20 @@ const toggleNavLinks = () => {
         e.classList.toggle('inversion', !mqNav.matches);
     });
 }
+
+//ios確認
+const ua = window.navigator.userAgent;
+
+const isIos =
+    ua.includes('iPhone') ||
+    ua.includes('iPad') ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+if (isIos) {
+    document.body.classList.add('ios')
+}
+
+
 // 実行
 window.addEventListener('DOMContentLoaded', () => {
     checkBr();
@@ -67,6 +81,6 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 btn.addEventListener('click', moveNav);
-mqBr.addEventListener('change', checkBr);
+mqBr.addEventListener('hange', checkBr);
 mqTri.addEventListener('change', moveTriangle);
 mqNav.addEventListener('change', toggleNavLinks);
