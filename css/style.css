@@ -11,7 +11,6 @@ body,
 html {
     overflow-x: hidden;
     overflow-y: hidden;
-    transform: translate3d(0, 0, 0);
 }
 
 .triangle {
@@ -189,6 +188,15 @@ header {
     top: 48px;
 }
 
+/* iosレスポンシブ */
+body.ios .triangle {
+    display: none;
+}
+
+body.ios .inversion {
+    mix-blend-mode: normal;
+    color: black;
+}
 
 /* titleのレイアウト変更*/
 /* 
