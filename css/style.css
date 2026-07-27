@@ -70,8 +70,8 @@ html {
 }
 
 .inversion {
-    color: rgb(253, 0, 0);
-    /* mix-blend-mode: difference; */
+    color: white;
+    mix-blend-mode: difference;
 }
 
 body {
