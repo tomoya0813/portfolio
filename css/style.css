@@ -18,11 +18,11 @@ html {
     width: 100vw;
     height: 130vh;
     clip-path: polygon(30% 0, 0 50%, 70% 100%);
+    -webkit-clip-path: polygon(30% 0, 0 50%, 70% 100%);
     transform: rotate(85deg);
     position: absolute;
     left: -20%;
     top: 25%;
-    z-index: -1;
 }
 
 .bg {
@@ -72,12 +72,14 @@ html {
 .inversion {
     color: white;
     mix-blend-mode: difference;
+    z-index: 1;
 }
 
 body {
     color: black;
     background: white;
     height: 100dvh;
+    isolation: isolate;
 }
 
 header {
@@ -244,8 +246,7 @@ header {
         width: 100dvw;
         height: 100dvh;
         background-color: rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(13px);
-        -webkit-backdrop-filter: blur(10px);
+
         z-index: 1;
         transform: translateY(-100%);
         opacity: 0;
@@ -253,6 +254,8 @@ header {
     }
 
     .page-nav.open {
+        backdrop-filter: blur(13px);
+        -webkit-backdrop-filter: blur(10px);
         opacity: 1;
         transform: translateY(0);
     }
