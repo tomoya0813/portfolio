@@ -7,14 +7,11 @@ const moveNav = () => {
     btn.classList.toggle('active')
 }
 
-btn.addEventListener('click', moveNav)
 
 //br削除
-
-const mediaQuery = window.matchMedia('(max-height : 630px)');
-const NEWBr = '<br>';
+const mqBr = window.matchMedia('(max-height : 630px)');
+const brHTML = '<br>';
 const indent = document.querySelectorAll('.indent');
-
 
 const deleteBr = () => {
     document.querySelectorAll('.hero br').forEach((e) => {
@@ -23,24 +20,53 @@ const deleteBr = () => {
 }
 
 const addBr = () => {
-
     indent.forEach((e) => {
-        e.insertAdjacentHTML("beforebegin", NEWBr)
+        e.insertAdjacentHTML("beforebegin", brHTML)
     });
 }
 
 const checkBr = () => {
-
     const hasBr = document.querySelectorAll('.hero br').length !== 0;
 
-    if (mediaQuery.matches) {
-        if (!hasBr) return;
+    if (mqBr.matches && hasBr) {
         deleteBr();
-    } else {
-        if (hasBr) return;
+    } else if (!mqBr.matches && !hasBr) {
         addBr();
     }
 }
 
-window.addEventListener('DOMContentLoaded', checkBr);
-mediaQuery.addEventListener('change', checkBr);
+// triangle移動
+const hero = document.querySelector('.hero');
+const subTitle = document.querySelector('.sub-title')
+const mqTri = window.matchMedia('(max-width:1024px), (max-height:630px)');
+const triangle = document.querySelector('.triangle')
+
+const moveTriangle = () => {
+    if (mqTri.matches) {
+        subTitle.appendChild(triangle)
+    } else {
+        hero.appendChild(triangle)
+    }
+}
+
+// ナビのクラス削除
+
+const navLinks = document.querySelectorAll('.page-nav li a');
+const mqNav = window.matchMedia('(max-width: 1000px)');
+
+const toggleNavlinks = () => {
+    navLinks.forEach((e) => {
+        e.classList.toggle('inversion', !mqNav.matches);
+    });
+}
+// 実行
+window.addEventListener('DOMContentLoaded', () => {
+    checkBr();
+    moveTriangle();
+    toggleNavli();
+});
+
+btn.addEventListener('click', moveNav);
+mqBr.addEventListener('change', checkBr);
+mqTri.addEventListener('change', moveTriangle);
+mqNav.addEventListener('change', toggleNavli);
