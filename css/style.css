@@ -35,6 +35,7 @@ html {
     user-select: none;
     pointer-events: none;
     white-space: nowrap;
+    contain: strict;
 }
 
 .bg.bg-top {
@@ -72,6 +73,7 @@ html {
 .inversion {
     color: white;
     mix-blend-mode: difference;
+    position: relative;
     z-index: 1;
 }
 
