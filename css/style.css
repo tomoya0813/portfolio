@@ -200,53 +200,6 @@ body.ios .inversion {
     color: black;
 }
 
-/* titleのレイアウト変更*/
-/* 
-　　　　jsの処理内容
-　・height　630px以下でbr削除
-  ・ heigth 630px以下　or
-   width 1024px以下でtriangleの親を
-   サブタイトルに変更
-*/
-@media (max-width:1024px),
-(max-height:630px) {
-    .hero {
-        flex-direction: column;
-        gap: 5vh;
-        align-items: center;
-        text-align: center;
-        justify-content: center;
-    }
-
-    .main-title {
-        position: static;
-        width: fit-content;
-        text-align: center;
-        margin-top: 3vh;
-        font-size: clamp(100px, 25vw, 160px);
-    }
-
-    .sub-title {
-        position: relative;
-        top: 0;
-        right: 0;
-        font-size: clamp(30px, 7vw, 50px);
-    }
-
-    .main-indent,
-    .sub-indent {
-        margin: 0;
-    }
-
-    .triangle {
-        width: 130vw;
-        height: 50vh;
-        top: -25vh;
-        left: -30vw;
-        transform: rotate(-20deg);
-    }
-}
-
 /*ナビボタン*/
 @media(max-width:1000px) {
     .page-nav {
@@ -319,23 +272,7 @@ body.ios .inversion {
 
 }
 
-/* headerの位置調整 */
-@media (max-width:500px) {
-    header {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-}
-
-@media (max-height:390px) {
-    header {
-        padding-top: 40px;
-    }
-}
-
-/* ナビリンクの位置調整 */
-@media (max-height:520px) {
+/* @media ()(max-height:520px) {
     .page-nav ul {
         gap: 0;
         margin: 0;
@@ -353,4 +290,149 @@ body.ios .inversion {
         align-items: center;
         flex: 1;
     }
+} */
+
+/* titleのレイアウト変更*/
+/* 
+　　　　jsの処理内容
+　・height　630px以下でbr削除
+  ・ heigth 630px以下　or
+   width 1024px以下でtriangleの親を
+   サブタイトルに変更
+*/
+@media (max-width:1024px) {
+    .hero {
+        flex-direction: column;
+        gap: 5vh;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .main-title {
+        position: static;
+        width: fit-content;
+        text-align: center;
+        margin-top: 3vh;
+        font-size: clamp(100px, 25vw, 160px);
+    }
+
+    .sub-title {
+        position: relative;
+        top: 0;
+        right: 0;
+        font-size: clamp(30px, 7vw, 50px);
+    }
+
+    .main-indent,
+    .sub-indent {
+        margin: 0;
+    }
+
+    .triangle {
+        width: 130vw;
+        height: 50vh;
+        top: -25vh;
+        left: -30vw;
+        transform: rotate(-20deg);
+    }
 }
+
+@media (max-width:470px) {
+    header {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media (max-width:380px) {
+    header {
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+
+@media (min-width:1025px) and (max-height:630px) {
+
+    .main-title,
+    .sub-title {
+        position: static;
+    }
+
+    .main-indent,
+    .sub-indent {
+        margin-left: 0;
+    }
+
+    .hero {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media(min-width:1025px) and (max-height:400px) {
+    header {
+        height: fit-content;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .hero {
+        height: 60vh;
+    }
+}
+
+/*
+@media (max-height:630px) and (min-width:1025px) {
+    .hero {
+        flex-direction: column;
+        gap: 5vh;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .main-title {
+        position: static;
+    }
+
+    .sub-title {
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+}
+
+@media (max-height:440px) and (min-width:1025px) {
+    header {
+        padding: 5px;
+        height: fit-content;
+    }
+
+    .main-title {
+        font-size: 70px;
+
+    }
+
+    .hero {
+        height: fit-content;
+    }
+} */
+
+/* headerの位置調整
+@media (max-width:500px) {
+    header {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+}
+
+@media (max-height:390px) {
+    header {
+        padding-top: 40px;
+    }
+} */
+
+/* ナビリンクの位置調整 */
