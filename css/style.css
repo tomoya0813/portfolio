@@ -83,7 +83,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    height: 20vh;
+    height: 17vh;
     padding: 50px 80px;
     font-size: 40px;
 }
@@ -142,7 +142,7 @@ header {
 }
 
 .hero {
-    height: 80vh;
+    height: 77vh;
     display: flex;
     flex-wrap: nowrap;
     position: relative;
@@ -301,7 +301,7 @@ body.ios .inversion {
 
 /* 
 　　　　jsの処理内容
-　・height　630px以下 且つ width 400px でbr削除
+　・height　630px以下 且つ width 400px以上 でbr削除
   ・ width 1024px以下でtriangleの親を
    　サブタイトルに変更
 */
