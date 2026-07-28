@@ -83,7 +83,7 @@ body {
 header {
     display: flex;
     justify-content: space-between;
-    height: 17vh;
+    height: 15vh;
     padding: 50px 80px;
     font-size: 40px;
 }
@@ -119,11 +119,24 @@ header {
     top: 40%;
     left: 10%;
     white-space: nowrap;
+    animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .main-indent {
     display: inline-block;
     margin-left: clamp(50px, 20vw, 300px);
+}
+
+@keyframes fadeUp {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .sub-title {
@@ -142,7 +155,7 @@ header {
 }
 
 .hero {
-    height: 77vh;
+    height: 80vh;
     display: flex;
     flex-wrap: nowrap;
     position: relative;
@@ -301,7 +314,7 @@ body.ios .inversion {
 
 /* 
 　　　　jsの処理内容
-　・height　630px以下 且つ width 400px以上 でbr削除
+　・height　630px以下 且つ width 400px でbr削除
   ・ width 1024px以下でtriangleの親を
    　サブタイトルに変更
 */
