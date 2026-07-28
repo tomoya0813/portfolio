@@ -91,7 +91,9 @@ header {
 .name {
     line-height: 1;
     font-size: clamp(30px, 5vw, 40px);
+    white-space: nowrap;
 }
+
 
 .page-nav ul {
     display: flex;
