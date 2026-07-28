@@ -87,4 +87,23 @@ mqTri.addEventListener('change', moveTriangle);
 mqNav.addEventListener('change', toggleNavLinks);
 
 // test 
-console.log(window.innerWidth);
+const debug = document.createElement('div');
+
+debug.textContent = `
+width: ${window.innerWidth}
+height: ${window.innerHeight}
+dpr: ${window.devicePixelRatio}
+`;
+
+debug.style.cssText = `
+position: fixed;
+top: 0;
+left: 0;
+z-index: 99999;
+background: white;
+color: black;
+padding: 10px;
+font-size: 16px;
+`;
+
+document.body.appendChild(debug);
