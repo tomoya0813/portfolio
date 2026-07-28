@@ -19,7 +19,7 @@ const moveNav = () => {
 
 
 //br削除
-const mqBr = window.matchMedia('(max-height : 630px)');
+const mqBr = window.matchMedia('(max-height : 630px) and (min-width:400px)');
 const brHTML = '<br>';
 const indent = document.querySelectorAll('.indent');
 
@@ -48,7 +48,7 @@ const checkBr = () => {
 // triangle移動
 const hero = document.querySelector('.hero');
 const subTitle = document.querySelector('.sub-title')
-const mqTri = window.matchMedia('(max-width:1024px), (max-height:630px)');
+const mqTri = window.matchMedia('(max-width:1024px)');
 const triangle = document.querySelector('.triangle')
 
 const moveTriangle = () => {
@@ -86,24 +86,24 @@ mqBr.addEventListener('change', checkBr);
 mqTri.addEventListener('change', moveTriangle);
 mqNav.addEventListener('change', toggleNavLinks);
 
-// test 
-const debug = document.createElement('div');
+// test
+// const debug = document.createElement('div');
 
-debug.textContent = `
-width: ${window.innerWidth}
-height: ${window.innerHeight}
-dpr: ${window.devicePixelRatio}
-`;
+// debug.textContent = `
+// width: ${window.innerWidth}
+// height: ${window.innerHeight}
+// dpr: ${window.devicePixelRatio}
+// `;
 
-debug.style.cssText = `
-position: fixed;
-top: 0;
-left: 0;
-z-index: 99999;
-background: white;
-color: black;
-padding: 10px;
-font-size: 16px;
-`;
+// debug.style.cssText = `
+// position: fixed;
+// top: 0;
+// left: 0;
+// z-index: 99999;
+// background: white;
+// color: black;
+// padding: 10px;
+// font-size: 16px;
+// `;
 
-document.body.appendChild(debug);
+// document.body.appendChild(debug);
