@@ -1,10 +1,20 @@
 'use strict'
+
+//ios確認
+const ua = window.navigator.userAgent;
+
+const isIos =
+    ua.includes('iPhone') ||
+    ua.includes('iPad') ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+
 //メニューボタン
 const btn = document.getElementById('btn');
 const nav = document.getElementById('nav')
 const moveNav = () => {
     nav.classList.toggle('open');
-    btn.classList.toggle('active')
+    btn.classList.toggle('active');
 }
 
 
@@ -60,27 +70,21 @@ const toggleNavLinks = () => {
     });
 }
 
-//ios確認
-const ua = window.navigator.userAgent;
-
-const isIos =
-    ua.includes('iPhone') ||
-    ua.includes('iPad') ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-if (isIos) {
-    document.body.classList.add('ios')
-}
-
 
 // 実行
 window.addEventListener('DOMContentLoaded', () => {
+    if (isIos) {
+        document.body.classList.add('ios')
+    }
     checkBr();
     moveTriangle();
     toggleNavLinks();
 });
 
 btn.addEventListener('click', moveNav);
-mqBr.addEventListener('hange', checkBr);
+mqBr.addEventListener('change', checkBr);
 mqTri.addEventListener('change', moveTriangle);
 mqNav.addEventListener('change', toggleNavLinks);
+
+// test 
+console.log(window.innerWidth);
