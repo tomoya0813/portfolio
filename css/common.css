@@ -1,3 +1,124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: "Oswald", sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+body,
+html {
+    overflow-x: hidden;
+
+}
+
+
+.inversion {
+    color: white;
+    mix-blend-mode: difference;
+}
+
+body {
+    color: black;
+    background: #FFFEF6;
+    height: 100dvh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px 80px;
+    font-size: 40px;
+
+}
+
+.name {
+    line-height: 1;
+    font-size: clamp(30px, 5vw, 40px);
+    white-space: nowrap;
+}
+
+.currentpage {
+    background: #4784BF;
+    color: #FFFEF6;
+    padding: 0 10px;
+    pointer-events: none;
+}
+
+
+.page-nav ul {
+    display: flex;
+    gap: 80px;
+
+}
+
+.page-nav a {
+    display: inline-block;
+    border-bottom: 5px solid rgba(0, 0, 0, 0);
+}
+
+.page-nav a:hover {
+    border-bottom: 5px solid #4784BF;
+}
+
+
+
+#btn {
+    position: relative;
+    z-index: 2;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 13px;
+    background: transparent;
+    border: none;
+    height: 63px;
+    width: 60px;
+    cursor: pointer;
+}
+
+.bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.4s;
+    width: clamp(35px, 5vw, 50px);
+    height: 5px;
+    background: black;
+    border-radius: 5px;
+}
+
+.bar:nth-child(1) {
+    top: 12px;
+}
+
+.bar:nth-child(2) {
+    top: 24px;
+}
+
+.bar:nth-child(3) {
+    top: 36px;
+}
+
+.bar:nth-child(4) {
+    top: 48px;
+}
+
+/* iosレスポンシブ */
+body.ios .triangle {
+    display: none;
+}
+
+body.ios .inversion {
+    mix-blend-mode: normal;
+    color: black;
+}
+
 /* ここからheader==================================================== */
 @media (max-width:470px) {
     header {
@@ -83,7 +204,7 @@
     }
 
     .page-nav a:hover {
-        border-bottom: 5px solid rgb(0, 0, 0);
+        border-bottom: 5px solid #4784BF;
     }
 
     #btn {
