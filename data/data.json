@@ -5,14 +5,16 @@
             "link": "tetris/index.html",
             "imgSrc": "img/works/tetris.png",
             "imgAlt": "テトリスプレイ画面",
-            "text": "javascriptを使って作成したテトリスです。PCでのプレイに対応してます。"
+            "text": "javascriptを使って作成したテトリスです。PCでのプレイに対応してます。",
+            "githubLink": "#"
         },
         {
             "title": "Cafe Lune",
             "link": "lune/index.html",
             "imgSrc": "img/works/Lune.png",
             "imgAlt": "こぼれたコーヒーと浮き上がるluneの文字",
-            "text": "架空のcafeサイトを作成しました。"
+            "text": "架空のcafeサイトを作成しました。",
+            "githubLink": "#"
         }
     ]
 }
