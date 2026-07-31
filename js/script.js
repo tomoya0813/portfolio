@@ -8,16 +8,6 @@ const isIos =
     ua.includes('iPad') ||
     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-
-//メニューボタン
-const btn = document.getElementById('btn');
-const nav = document.getElementById('nav')
-const moveNav = () => {
-    nav.classList.toggle('open');
-    btn.classList.toggle('active');
-}
-
-
 //br削除
 const mqBr = window.matchMedia('(max-height : 630px) and (min-width:400px)');
 const brHTML = '<br>';
@@ -61,14 +51,14 @@ const moveTriangle = () => {
 
 // ナビのクラス削除
 
-const navLinks = document.querySelectorAll('.page-nav li a');
-const mqNav = window.matchMedia('(max-width: 1000px)');
+// const navLinks = document.querySelectorAll('.page-nav li a');
+// const mqNav = window.matchMedia('(max-width: 1000px)');
 
-const toggleNavLinks = () => {
-    navLinks.forEach((e) => {
-        e.classList.toggle('inversion', !mqNav.matches);
-    });
-}
+// const toggleNavLinks = () => {
+//     navLinks.forEach((e) => {
+//         e.classList.toggle('inversion', !mqNav.matches);
+//     });
+// }
 
 
 // 実行
@@ -81,8 +71,7 @@ window.addEventListener('DOMContentLoaded', () => {
     toggleNavLinks();
 });
 
-btn.addEventListener('click', moveNav);
 mqBr.addEventListener('change', checkBr);
 mqTri.addEventListener('change', moveTriangle);
-mqNav.addEventListener('change', toggleNavLinks);
+// mqNav.addEventListener('change', toggleNavLinks);
 
