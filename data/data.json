@@ -2,14 +2,24 @@
     "works": [
         {
             "title": "TETRIS",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
             "link": "tetris/index.html",
             "imgSrc": "img/works/tetris.png",
             "imgAlt": "テトリスプレイ画面",
-            "text": "javascriptを使って作成したテトリスです。PCでのプレイに対応してます。",
+            "text": "JavaScriptを使って作成したテトリスです。PCでのプレイに対応してます。",
             "githubLink": "#"
         },
         {
             "title": "Cafe Lune",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
             "link": "lune/index.html",
             "imgSrc": "img/works/Lune.png",
             "imgAlt": "こぼれたコーヒーと浮き上がるluneの文字",
