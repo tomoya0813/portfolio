@@ -17,26 +17,51 @@
 
 <body>
     <header>
-        <p><a href="../index.html" class="name inversion">Tomoya | Web Developer</a></p>
+        <p><a href="../index.html" class="name">Tomoya | Web Developer</a></p>
         <nav class="page-nav" id="nav" aria-label="サイトナビゲーション">
             <ul>
-                <li><a href="../about/index.html" class="inversion">about</a></li>
-                <li><a href="index.html" class="inversion"> works</a></li>
-                <li><a href="../contact/index.html" class="inversion">contact</a></li>
+                <li><a href="../about/index.html">about</a></li>
+                <li id="currentpage" class="currentpage"><a href="index.html">works</a></li>
+                <li><a href="../contact/index.html">contact</a></li>
             </ul>
         </nav>
         <button id="btn" aria-label="ナビ開閉ボタン" type="button">
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
     </header>
     <main class="main-area">
-        <h1 class="inversion">WORKS</h1>
+        <h1>WORKS</h1>
         <div id="container">
+            <!-- jsonからjsで追加する -->
+            <!-- <div class="works-item">
+                <p class="works-title"></p>
+                <div><span class="tech-tag"></span></div>
+                <img src="" alt="">
+                <p class="works-text"></p>
+                <div class="btn-wrapper">
+                    <a href="" class="demo btn">View Demo</a>
+                    <a href="" class="github btn">Github Code</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="white-triangle triangle-left">
+
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M-190 2C38.8 114.8 367.667 280.333 503.5 349L-204 1285.5" stroke="currentColor" fill="#FFFEF6"
+                    stroke-width="20" />
+            </svg>
+
+        </div>
+        <div class="white-triangle triangle-right">
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1209 17L396 916.5L1542.5 1306.5" stroke="currentColor" fill="#FFFEF6" stroke-width="20" />
+            </svg>
         </div>
     </main>
+    <script src="../js/common.js"></script>
     <script src="../js/works.js"></script>
 </body>
 

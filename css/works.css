@@ -1,110 +1,35 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    list-style: none;
-    text-decoration: none;
-    font-family: "Oswald", sans-serif;
-}
-
-body,
-html {
-    overflow-x: hidden;
-    overflow-y: scroll;
+h1 {
+    font-size: clamp(50px, 8vh, 75px);
+    text-align: center;
+    font-weight: 395;
 }
 
 
-.inversion {
-    color: white;
-    mix-blend-mode: difference;
-}
-
-body {
-    color: black;
-    background: white;
-    height: 100dvh;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 50px 80px;
-    font-size: 40px;
-
-}
-
-.name {
-    line-height: 1;
-    font-size: clamp(30px, 5vw, 40px);
-    white-space: nowrap;
-}
-
-
-.page-nav ul {
-    display: flex;
-    gap: 80px;
-
-}
-
-.page-nav a {
-    display: inline-block;
-}
-
-.page-nav a:hover {
-    border-bottom: 5px solid white;
-}
-
-
-
-#btn {
-    position: relative;
-    z-index: 2;
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    padding-top: 13px;
-    background: transparent;
-    border: none;
-    height: 63px;
-    width: 60px;
-    cursor: pointer;
-}
-
-.bar {
+.white-triangle {
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    transition: 0.4s;
-    width: clamp(35px, 5vw, 50px);
-    height: 5px;
-    background: black;
-    border-radius: 5px;
+    color: #4784BF;
+    pointer-events: none;
+    z-index: -1;
 }
 
-.bar:nth-child(1) {
-    top: 12px;
+.white-triangle svg {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
-.bar:nth-child(2) {
-    top: 24px;
+.triangle-left {
+    width: 500px;
+    height: 500px;
+    left: 0;
+    top: 0;
 }
 
-.bar:nth-child(3) {
-    top: 36px;
-}
-
-.bar:nth-child(4) {
-    top: 48px;
-}
-
-/* iosレスポンシブ */
-body.ios .triangle {
-    display: none;
-}
-
-body.ios .inversion {
-    mix-blend-mode: normal;
-    color: black;
+.triangle-right {
+    width: 300px;
+    height: 300px;
+    right: -2%;
+    bottom: 0;
 }
 
 .main-area {
@@ -115,42 +40,84 @@ body.ios .inversion {
     position: relative;
 }
 
-h1 {
-    font-size: clamp(50px, 8vh, 75px);
-    text-align: center;
-    font-weight: 395;
-}
-
-
-h2 {
-    text-align: center;
-    padding-bottom: 15px;
-}
-
 /* ここからworks ========================================= */
 #container {
-    margin: 0 10px 10px 10px;
+    margin: 20px;
     align-self: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     padding: 40px;
-    background: rgb(219, 215, 215);
+    background: #E6E7E8;
     border-radius: 30px;
 }
 
 .works-item {
     max-width: 400px;
+    border: black solid;
+    background: #FFFEF6;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 2px 2px 4px;
 }
 
-.works-item a {
+.works-title {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 30px;
+    border-bottom: dotted black 2px;
+}
+
+.tech-tag {
+    display: inline-block;
+    background-color: #E6E7E8;
     color: black;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 40px;
+    margin: 3px;
 }
 
 .works-item img {
     width: 100%;
     height: auto;
     border-radius: 20px;
+    border: black 2px solid;
+}
+
+.works-text {
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn {
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 5px;
+}
+
+.demo {
+    background: #4784BF;
+    color: #F7FCFE;
+    border: 2px solid currentColor;
+}
+
+.github {
+    background: #F7FCFE;
+    border: 2px solid currentColor;
+    color: #4784BF;
+}
+
+.btn::after {
+    content: "→";
+    margin-left: 5px;
 }
 
 @media(max-width:660px) {
