@@ -17,39 +17,52 @@
 
 <body>
     <header>
-        <div class="triangle"></div>
-        <p><a href="../index.html" class="name inversion">Tomoya | Web Developer</a></p>
+        <p><a href="../index.html" class="name">Tomoya | Web Developer</a></p>
         <nav class="page-nav" id="nav" aria-label="サイトナビゲーション">
             <ul>
-                <li><a href="../about/index.html" class="inversion">about</a></li>
-                <li><a href="../works/index.html" class="inversion"> works</a></li>
-                <li><a href="index.html" class="inversion">contact</a></li>
+                <li><a href="../about/index.html">about</a></li>
+                <li><a href="../works/index.html"> works</a></li>
+                <li id="currentpage" class="currentpage"><a href="index.html">contact</a></li>
             </ul>
         </nav>
         <button id="btn" aria-label="ナビ開閉ボタン" type="button">
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
     </header>
     <main class="main-area">
-        <h1 class="inversion">contact</h1>
+        <h1>CONTACT</h1>
         <form action="" method="post">
             <div class="form-item">
-                <label for="name">名前: </label>
+                <label for="name">NAME: </label>
                 <input type="text" name="name" id="name" required>
             </div>
             <div class="form-item">
-                <label for="email">メールアドレス: </label>
+                <label for="email">EMAIL: </label>
                 <input type="email" name="email" id="email" required>
             </div>
             <div class="form-item">
-                <label for="message">メッセージ：</label>
+                <label for="message">MESSAGE：</label>
                 <textarea id="message" name="message" required></textarea>
             </div>
-            <input id="submit" type="submit" value="送信">
+            <button id="submit" type="submit">送信</button>
         </form>
+        <div class="white-triangle triangle-left">
+
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M-190 2C38.8 114.8 367.667 280.333 503.5 349L-204 1285.5" stroke="currentColor" fill="#FFFEF6"
+                    stroke-width="20" />
+            </svg>
+
+        </div>
+        <div class="white-triangle triangle-right">
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1209 17L396 916.5L1542.5 1306.5" stroke="currentColor" fill="#FFFEF6" stroke-width="20" />
+            </svg>
+        </div>
+        <script src="../js/common.js"></script>
     </main>
 </body>
 

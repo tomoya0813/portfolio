@@ -1,0 +1,81 @@
+form {
+    display: flex;
+    flex-direction: column;
+    font-size: 30px;
+    align-items: center;
+    gap: 10px;
+    background: #E6E7E8;
+    width: 60vw;
+    margin: 20px auto;
+    padding: 20px;
+    position: relative;
+    box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.4);
+    border-radius: 50px;
+}
+
+
+
+.form-item {
+    width: 60%;
+    font-size: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+input,
+textarea,
+#submit {
+    padding: 5px;
+    font-size: 25px;
+    border-radius: 10px;
+}
+
+#name {
+    height: 40px;
+}
+
+#email {
+    height: 40px;
+}
+
+#message {
+    resize: none;
+    height: 180px;
+}
+
+#submit {
+    width: 30%;
+    height: 70px;
+    background: #4784BF;
+    color: #F7FCFE;
+    border: none;
+}
+
+#submit::after {
+    content: "↗";
+    display: inline-block;
+    color: inherit;
+    margin-left: 10px;
+}
+
+header {
+    position: relative;
+}
+
+@media (max-width:1000px) {
+    form {
+        width: 80vw;
+    }
+}
+
+@media (max-width:500px) {
+    .form-item {
+        width: 80%;
+    }
+}
+
+@media (max-width:445px) {
+    #submit::after {
+        display: none;
+    }
+}
