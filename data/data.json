@@ -1,4 +1,39 @@
 {
+    "about": {
+        "skills": {
+            "languageAndTools": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "learning": [
+                "c言語",
+                "Node.js"
+            ]
+        },
+        "journey": [
+            {
+                "date": "2026.07",
+                "text": "ポートフォリオの作成を開始"
+            },
+            {
+                "date": "2026.07",
+                "text": "TETRISを完成"
+            },
+            {
+                "date": "2026.06",
+                "text": "Luneを完成"
+            },
+            {
+                "date": "2026.05",
+                "text": "CSS・Javascriptの学習"
+            },
+            {
+                "date": "2026.03",
+                "text": "HTML学習"
+            }
+        ]
+    },
     "works": [
         {
             "title": "TETRIS",
