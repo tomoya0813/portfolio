@@ -43,7 +43,7 @@
                 "CSS",
                 "JavaScript"
             ],
-            "link": "tetris/index.html",
+            "demoLink": "tetris/index.html",
             "imgSrc": "img/works/tetris.png",
             "imgAlt": "テトリスプレイ画面",
             "text": "JavaScriptを使って作成したテトリスです。PCでのプレイに対応してます。",
@@ -56,7 +56,7 @@
                 "CSS",
                 "JavaScript"
             ],
-            "link": "lune/index.html",
+            "demoLink": "lune/index.html",
             "imgSrc": "img/works/Lune.png",
             "imgAlt": "こぼれたコーヒーと浮き上がるluneの文字",
             "text": "架空のcafeサイトを作成しました。",

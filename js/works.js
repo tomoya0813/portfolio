@@ -21,8 +21,8 @@ const createWorks = (works) => {
                   <p class="works-text">${worksItem.text}</p>
       
                   <div class="btn-wrapper">
-                    <a href="${worksItem.link}" class="demo btn">View Demo</a>
-                    <a href="${worksItem.githubLink}" class="github btn">Github Code</a>
+                    <a href="${worksItem.demoLink}" class="demo btn" target="_blank">View Demo</a>
+                    <a href="${worksItem.githubLink}" class="github btn" target="_blank">Source Code</a>
                   </div>
                  </div>`
     })
