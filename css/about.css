@@ -8,6 +8,7 @@ h2 {
 h3 {
     font-size: 40px;
     font-weight: 400;
+    white-space: nowrap;
 }
 
 h3::before {
@@ -67,14 +68,19 @@ section {
 }
 
 .chara {
-    max-width: 200px;
-    max-height: 200px;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+
     border-radius: 50%;
     margin: 0 auto;
 }
 
 .link-wrapper {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
     gap: 50px;
 }
 
@@ -118,7 +124,75 @@ section {
     gap: 20px;
 }
 
-.text {
-    display: inline-block;
-    margin-left: 15px;
+.journey-item {
+    position: relative;
+
+}
+
+.date {
+    margin: 5px 0;
+}
+
+.date::before {
+    content: "●";
+    margin-right: 4px;
+}
+
+.journey-text {
+    margin: 0;
+    padding-left: 30px;
+}
+
+.journey-text::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 43px;
+    width: 2px;
+    height: 90%;
+    background: currentColor;
+}
+
+.journey-item:last-child .journey-text::before {
+    display: none;
+}
+
+@media (max-width:1039px) {
+    .link-wrapper {
+        gap: 15px;
+    }
+}
+
+@media (max-width:760px) {
+    section {
+        width: 80%;
+    }
+
+    .card {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media (max-width:550px) {
+    .card {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    h3::before {
+        display: none;
+    }
+}
+
+@media (max-width:460px) {
+    section {
+        width: 95%;
+    }
+}
+
+@media (max-width:370px) {
+    h3 {
+        white-space: normal;
+    }
 }
