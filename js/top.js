@@ -1,5 +1,10 @@
 'use strict'
-
+// works取り込み
+fetch("data/data.json")
+    .then(response => response.json())
+    .then(data => {
+        sessionStorage.setItem("works", JSON.stringify(data.works))
+    })
 //ios確認
 const ua = window.navigator.userAgent;
 
@@ -68,7 +73,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     checkBr();
     moveTriangle();
-    toggleNavLinks();
+    // toggleNavLinks();
 });
 
 mqBr.addEventListener('change', checkBr);
