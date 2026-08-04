@@ -1,30 +1,46 @@
 'use strict'
 
 const container = document.getElementById('container');
-fetch("../data/data.json")
-  .then(response => response.json())
-  .then(data => {
-    const works = data.works;
-    works.forEach(e => {
+const get = sessionStorage.getItem("works");
 
-      const techs = (e.tech || [])
-        .map(techName => `<span class="tech-tag">${techName}</span>`)
+const createWorks = (works) => {
+  const addHTML = works
+    .map(worksItem => {
+
+      const techs = (worksItem.tech)
+        .map(techName =>
+          `<span class="tech-tag">${techName}</span>`)
         .join('');
 
-      const imgSrc = `../${e.imgSrc}`
+      const imgSrc = `../${worksItem.imgSrc}`
 
-      const addHTML = ` <div class="works-item">                          
-                            <p class="works-title">${e.title}</p>
-                              ${techs}
-                            <img src="${imgSrc}" alt="${e.imgAlt}">
-                            <p class="works-text">${e.text}</p>
-                          <div class="btn-wrapper">
-                              <a href="${e.link}" class="demo btn">View Demo</a>
-                              <a href="${e.githubLink}" class="github btn">Github Code</a>
-                          </div>
-                        </div>`
+      return `<div class="works-item">                          
+                  <p class="works-title">${worksItem.title}</p>
+                  ${techs}
+                  <img src="${imgSrc}" alt="${worksItem.imgAlt}">
+                  <p class="works-text">${worksItem.text}</p>
+      
+                  <div class="btn-wrapper">
+                    <a href="${worksItem.link}" class="demo btn">View Demo</a>
+                    <a href="${worksItem.githubLink}" class="github btn">Github Code</a>
+                  </div>
+                 </div>`
+    })
+    .join('')
 
-      container.insertAdjacentHTML('beforeend', addHTML);
+  container.insertAdjacentHTML('beforeend', addHTML);
+};
 
+// createWorks実行
+if (get) {
+  createWorks(JSON.parse(get));
+  console.log(1)
+} else {
+  fetch("../data/data.json")
+    .then(response => response.json())
+    .then(data => {
+      sessionStorage.setItem("works", JSON.stringify(data.works));
+      createWorks(data.works)
     });
-  });
+  console.log(2)
+}
