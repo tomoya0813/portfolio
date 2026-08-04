@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomoya | Web Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Oswald:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/about.css">
+    <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+</head>
+
+<body>
+    <header>
+        <p><a href="../index.html" class="name">Tomoya | Web Developer</a></p>
+        <nav class="page-nav" id="nav" aria-label="サイトナビゲーション">
+            <ul>
+                <li id="currentpage" class="currentpage"><a href="index.html">about</a></li>
+                <li><a href="../works/">works</a></li>
+                <li><a href="../contact/index.html">contact</a></li>
+            </ul>
+        </nav>
+        <button id="btn" aria-label="ナビ開閉ボタン" type="button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </header>
+    <main class="main-area">
+        <h1>ABOUT</h1>
+        <div class="section-wrapper">
+            <section class="profile">
+                <div class="card">
+                    <h2><span class="initial">P</span>rofile</h2>
+                    <p class="profile-name">Tomoya</p>
+                    <img class="chara" src="../img/chara.png" alt="水色のオリジナルキャラクターのイラスト">
+                    <div class="link-wrapper">
+                        <a href="" class="link">Github</a>
+                        <a href="" class="link">Email</a>
+                    </div>
+                    <p class="text">HTML・CSS・JavaScriptを中心に、デザインから実装まで一貫して制作しています。</p>
+                </div>
+            </section>
+            <section class="skills">
+                <div class="card">
+                    <h2><span class="initial">S</span>kills</h2>
+                    <div class="skill-group">
+                        <h3>Languages & Tools</h3>
+                        <ul class="skills-wrapper" id="lt-container">
+                            <!-- <li class="lt"></li> -->
+                        </ul>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Learning</h3>
+                        <ul class="skils-wrapper" id="learning-container">
+                            <!-- <li class="lt learning"></li> -->
+                        </ul>
+                    </div>
+            </section>
+            <section class="journey">
+                <div class="card">
+                    <h2><span class="initial">J</span>ourney</h2>
+                    <div id="journey-container" class="journey-wrapper">
+                        <!-- <p>
+                                <span class="date"></span><br> 
+                                <span class="text"></span>
+                             </p> -->
+
+                    </div>
+            </section>
+        </div>
+
+        <div class="white-triangle triangle-left">
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M-190 2C38.8 114.8 367.667 280.333 503.5 349L-204 1285.5" stroke="currentColor" fill="#FFFEF6"
+                    stroke-width="20" />
+            </svg>
+
+        </div>
+        <div class="white-triangle triangle-right">
+            <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1209 17L396 916.5L1542.5 1306.5" stroke="currentColor" fill="#FFFEF6" stroke-width="20" />
+            </svg>
+        </div>
+    </main>
+    <script src="../js/common.js"></script>
+    <script src="../js/about.js"></script>
+</body>
+
+</html>
