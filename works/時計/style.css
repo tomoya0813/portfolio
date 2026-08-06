@@ -1,0 +1,30 @@
+.clock-Object {
+    position: relative;
+    width: var(--clock-width);
+    height: var(--clock-height);
+    border-radius: var(--clock-radius);
+    border: var(--clock-bw) solid var(--clock-color);
+    background-color: var(--clock-bg);
+}
+
+.minutes-hand,
+.hours-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: left center;
+}
+
+.minutes-hand {
+    width: var(--min-width);
+    height: var(--min-height);
+    background-color: var(--min-color);
+    transform: var(--transform);
+}
+
+.hours-hand {
+    width: var(--hour-width);
+    height: var(--hour-height);
+    background-color: var(--hour-color);
+    transform: var(--transform);
+}
