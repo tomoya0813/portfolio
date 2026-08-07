@@ -112,4 +112,5 @@ const createClock = (setting = {}) => {
         tickTime();
         setInterval(tickTime, 1000);
     }
+    return clockElement;
 }
