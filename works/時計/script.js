@@ -3,37 +3,67 @@
 const defaultSetting = {
     height: 300,
     width: 300,
+    opacity: 1,
     borderRadius: 50,
     borderColor: 'currentcolor',
     backgroundColor: 'inherit',
     borderWidth: 2,
-    hands: {
-        min: {
-            width: 140,
-            height: 2,
-            color: "black"
-        },
-        hour: {
-            width: 100,
-            height: 2,
-            color: "black"
-        }
+
+    minuteHand: {
+        width: 140,
+        height: 2,
+        opacity: 1,
+        color: "black"
+    },
+
+    hourHand: {
+        width: 100,
+        height: 2,
+        opacity: 1,
+        color: "black"
+    },
+
+    secondHand: {
+        width: 140,
+        height: 1,
+        opacity: 1,
+        color: "black"
     }
 };
 
-const createClock = (setting = defaultSetting) => {
+const createClock = (setting = {}) => {
 
-    const handsetting = Object.assign({}, defaultSetting.hands, setting)
-    const config = Object.assign({}, defaultSetting, setting);
+    const config = {
+        ...defaultSetting,
+        ...setting,
+
+        minuteHand: {
+            ...defaultSetting.minuteHand,
+            ...(setting.minuteHand ?? {})
+        },
+
+        hourHand: {
+            ...defaultSetting.hourHand,
+            ...(setting.hourHand ?? {})
+        },
+
+        secondHand: {
+            ...defaultSetting.secondHand,
+            ...(setting.secondHand ?? {})
+        }
+    };
+
 
 
     const clockElement = document.createElement('div');
-    const minutesHand = document.createElement('span');
-    const hoursHand = document.createElement('span');
+    const minuteHand = document.createElement('span');
+    const hourHand = document.createElement('span');
+    const secondHand = document.createElement('span');
 
-    clockElement.classList.add('clock-Object');
-    minutesHand.classList.add('minutes-hand');
-    hoursHand.classList.add('hours-hand');
+    clockElement.classList.add('clock-object');
+    minuteHand.classList.add('minute-hand');
+    hourHand.classList.add('hour-hand');
+    secondHand.classList.add('second-hand')
 
     clockElement.style.setProperty('--clock-height', `${config.height}px`);
     clockElement.style.setProperty('--clock-width', `${config.width}px`);
@@ -41,26 +71,45 @@ const createClock = (setting = defaultSetting) => {
     clockElement.style.setProperty('--clock-radius', `${config.borderRadius}%`);
     clockElement.style.setProperty('--clock-bg', `${config.backgroundColor}`);
     clockElement.style.setProperty('--clock-bw', `${config.borderWidth}px`);
+    clockElement.style.setProperty('--clock-opacity', `${config.opacity}`);
 
-    minutesHand.style.setProperty('--min-width', `${config.hands.min.width}px`);
-    minutesHand.style.setProperty('--min-height', `${config.hands.min.height}px`);
-    minutesHand.style.setProperty('--min-color', `${config.hands.min.color}`);
+    minuteHand.style.setProperty('--minute-width', `${config.minuteHand.width}px`);
+    minuteHand.style.setProperty('--minute-height', `${config.minuteHand.height}px`);
+    minuteHand.style.setProperty('--minute-color', `${config.minuteHand.color}`);
+    minuteHand.style.setProperty('--minute-opacity', `${config.minuteHand.opacity}`);
 
-    hoursHand.style.setProperty('--hour-width', `${config.hands.hour.width}px`);
-    hoursHand.style.setProperty('--hour-height', `${config.hands.hour.height}px`);
-    hoursHand.style.setProperty('--hour-color', `${config.hands.hour.color}`);
+    hourHand.style.setProperty('--hour-width', `${config.hourHand.width}px`);
+    hourHand.style.setProperty('--hour-height', `${config.hourHand.height}px`);
+    hourHand.style.setProperty('--hour-color', `${config.hourHand.color}`);
+    hourHand.style.setProperty('--hour-opacity', `${config.hourHand.opacity}`);
 
-    clockElement.append(minutesHand, hoursHand);
+    secondHand.style.setProperty('--second-width', `${config.secondHand.width}px`);
+    secondHand.style.setProperty('--second-height', `${config.secondHand.height}px`);
+    secondHand.style.setProperty('--second-color', `${config.secondHand.color}`);
+    secondHand.style.setProperty('--second-opacity', `${config.secondHand.opacity}`)
+
+
+    clockElement.append(minuteHand, hourHand, secondHand);
 
     const tickTime = () => {
         const nowTime = new Date();
-        const angleOfMinutesHand = nowTime.getMinutes() * 6 - 90;
-        const angleOfHoursHand = (nowTime.getHours() % 12) * 30 + nowTime.getMinutes() * 0.5 - 90;
-        minutesHand.style.setProperty('--transform', `rotate(${angleOfMinutesHand}deg)`)
-        hoursHand.style.setProperty('--transform', `rotate(${angleOfHoursHand}deg)`)
+        const angleOfMinuteHand = nowTime.getMinutes() * 6 - 90;
+        const angleOfHourHand = (nowTime.getHours() % 12) * 30 + nowTime.getMinutes() * 0.5 - 90;
+        const angleOfSecondHand = (nowTime.getSeconds() + nowTime.getMilliseconds() / 1000) * 6 - 90;
+        minuteHand.style.setProperty('--minute-transform', `rotate(${angleOfMinuteHand}deg)`);
+        hourHand.style.setProperty('--hour-transform', `rotate(${angleOfHourHand}deg)`);
+        secondHand.style.setProperty('--second-transform', `rotate(${angleOfSecondHand}deg)`)
     }
 
-    tickTime();
-    const clockSettimer = setInterval(tickTime, 60000);
-    return clockElement;
+    const update = () => {
+        tickTime();
+        requestAnimationFrame(update);
+    };
+
+    if (config.secondHand.opacity > 0) {
+        requestAnimationFrame(update);
+    } else {
+        tickTime();
+        setInterval(tickTime, 1000);
+    }
 }
