@@ -27,11 +27,12 @@ fetch("../data/data.json")
 
         const journey = data.about.journey;
         const journeyHTML = journey
+            .reverse()
             .map(journeyItem =>
                 `<div class="journey-item">
                         <p class="date">${journeyItem.date}</p>
                         <p class="journey-text">${journeyItem.text}</p>
                 </div>`)
             .join('');
-        journeyContainer.insertAdjacentHTML('beforeend', journeyHTML);
+        journeyContainer.insertAdjacentHTML('beforebegin', journeyHTML);
     });
