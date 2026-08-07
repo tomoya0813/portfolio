@@ -37,6 +37,19 @@
     },
     "works": [
         {
+            "title": "create clock",
+            "tech": [
+                "HTML",
+                "CSS",
+                "JavaScript"
+            ],
+            "demoLink": "clock/index.html",
+            "imgSrc": "img/works/clock.png",
+            "imgAlt": "丸い時計",
+            "text": "ポートフォリオ作成時の背景として使うために作成しました。ライブラリのように設定変更が可能です。",
+            "githubLink": "#"
+        },
+        {
             "title": "TETRIS",
             "tech": [
                 "HTML",
