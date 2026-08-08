@@ -5,13 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tomoya | Web Developer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+        integrity="sha256-5uKiXEwbaQh9cgd2/5Vp6WmMnsUr3VZZw0a8rKnOKNU=" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Oswald:wght@200;300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="works/clock/clock.css">
     <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
     <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
 </head>
 
@@ -26,33 +31,82 @@
             </ul>
         </nav>
         <button id="btn" aria-label="ナビ開閉ボタン" type="button">
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
-            <span class="bar inversion"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
     </header>
     <main class="hero">
-        <div class="bg bg-top">
-            2026 PORTFOLIO 2026 PORTFOLIO 2026 PORTFOLIO
-        </div>
-        <div class="bg bg-bottom">
-            2026 PORTFOLIO 2026 PORTFOLIO 2026 PORTFOLIO
-        </div>
-        <h1 class="main-title inversion">
-            THIS IS <br>
-            <span class="main-indent indent">ME</span>
-        </h1>
-        <div class="sub-title">
-            <p class="inversion">
-                Available for <br>
-                <span class="sub-indent indent">
-                    new opportunities.
-                </span>
+
+        <div class="left-hero">
+            <h1 class="main-title">
+                HI, I'M TOMOYA
+            </h1>
+            <div class="chara">
+                <img src="img/chara.png" alt="水色のオリジナルキャラクターのイラスト">
+            </div>
+            <p class="sub-title">
+                Bring your design to life.
             </p>
         </div>
-        <div class="triangle"></div>
+
+        <div class="right-hero">
+            <div class="works-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" class="works-bg">
+                    <defs>
+                        <pattern id="a" width="69.141" height="40" patternTransform="rotate(30)"
+                            patternUnits="userSpaceOnUse">
+                            <rect width="100%" height="100%" fill="#fffef5" />
+                            <path fill="none" stroke="#4682be"
+                                d="M69.212 40H46.118L34.57 20 46.118 0h23.094l11.547 20zM57.665 60H34.57L23.023 40 34.57 20h23.095l11.547 20zm0-40H34.57L23.023 0 34.57-20h23.095L69.212 0zM34.57 60H11.476L-.07 40l11.547-20h23.095l11.547 20zm0-40H11.476L-.07 0l11.547-20h23.095L46.118 0zM23.023 40H-.07l-11.547-20L-.07 0h23.094L34.57 20z" />
+                        </pattern>
+                    </defs>
+                    <rect width="800%" height="800%" fill="url(#a)" transform="translate(-15 -21)" />
+                </svg>
+                <div class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            <!-- <li class="splide__slide">
+                            <img src="">
+                        </li> -->
+                        </ul>
+                    </div>
+                </div>
+                <a href="/works/index.html" class="works-btn">VIEW MY WORK</a>
+            </div>
+
+        </div>
+        <div class="bg">
+            <svg class="hexagon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+                <defs>
+                    <pattern id="hexagon" width="29" height="50.115" patternTransform="scale(4)"
+                        patternUnits="userSpaceOnUse">
+                        <rect width="100%" height="100%" fill="none" />
+                        <path fill="none" stroke="#4784BF" stroke-width=".5"
+                            d="M14.498 16.858 0 8.488.002-8.257l14.5-8.374L29-8.26l-.002 16.745zm0 50.06L0 58.548l.002-16.745 14.5-8.373L29 41.8l-.002 16.744zM28.996 41.8l-14.498-8.37.002-16.744L29 8.312l14.498 8.37-.002 16.745zm-29 0-14.498-8.37.002-16.744L0 8.312l14.498 8.37-.002 16.745z" />
+                    </pattern>
+                </defs>
+                <rect width="800%" height="800%" fill="url(#hexagon)" />
+            </svg>
+            <svg class="circle-fill-left" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="600" cy="600" r="600" fill="#4784BF" />
+            </svg>
+            <svg class="circle-fill-right" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="600" cy="600" r="600" fill="#4784BF" />
+            </svg>
+            <svg class="circle-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+                <circle cx="600" cy="600" r="599" fill="none" stroke="#4784BF" stroke-width="5" />
+            </svg>
+            <svg class="circle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+                <circle cx="600" cy="600" r="599" fill="none" stroke="#4784BF" stroke-width="5" />
+            </svg>
+        </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"
+        integrity="sha256-FZsW7H2V5X9TGinSjjwYJ419Xka27I8XPDmWryGlWtw=" crossorigin="anonymous"></script>
+    <script src="js/common.js"></script>
+    <script src="works/clock/clock.js"></script>
     <script src="js/top.js"></script>
 </body>
 
