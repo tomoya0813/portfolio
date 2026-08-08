@@ -14,19 +14,15 @@ a {
 body,
 html {
     overflow-x: hidden;
-
 }
 
-
-.inversion {
-    color: white;
-    mix-blend-mode: difference;
-}
 
 body {
     color: black;
     background: #FFFEF6;
     height: 100dvh;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -34,6 +30,8 @@ header {
     justify-content: space-between;
     padding: 50px 80px;
     font-size: 40px;
+    background: #FFFEF6;
+    border-bottom: solid 2px #f8f7eb;
 
 }
 
@@ -41,7 +39,7 @@ h1 {
     font-size: clamp(50px, 8vh, 75px);
     text-align: center;
     font-weight: 395;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 
 
@@ -117,15 +115,6 @@ h1 {
     top: 48px;
 }
 
-/* iosレスポンシブ */
-body.ios .triangle {
-    display: none;
-}
-
-body.ios .inversion {
-    mix-blend-mode: normal;
-    color: black;
-}
 
 /* ここからさんかく ===============================*/
 .white-triangle {
