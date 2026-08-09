@@ -205,10 +205,6 @@ body {
 
 @media (max-width:530px) {
 
-    h1 {
-        font-size: 40px;
-    }
-
     .chara {
         width: 200px;
         height: 200px;
@@ -267,36 +263,3 @@ body {
         display: none;
     }
 }
-
-/* 
-@media (max-width:1200px) {
-    .circle-fill-right {
-        right: -30%;
-    }
-
-    .circle-right {
-        right: -50%;
-    }
-}
-
-@media (max-width:530px) {
-    .circle-right {
-        right: -90%;
-    }
-
-    .hexagon {
-        left: -20%;
-    }
-}
-
-@media (max-width:400px) {
-    .hexagon {
-        display: none;
-    }
-}
-
-@media (max-height:655px) {
-    .hexagon {
-        display: none;
-    }
-} */
