@@ -4,7 +4,8 @@ const container = document.getElementById('container');
 const get = sessionStorage.getItem("works");
 
 const createWorks = (works) => {
-  const addHTML = works
+  const addHTML = [...works]
+    .reverse()
     .map(worksItem => {
 
       const techs = (worksItem.tech)
@@ -29,18 +30,35 @@ const createWorks = (works) => {
     .join('')
 
   container.insertAdjacentHTML('beforeend', addHTML);
+  // item奇数時の処理
+
+  const isOddNumber = works.length % 2 === 1;
+
+  if (isOddNumber) {
+    const soonHTML = `<div class="works-item soon">
+                      <img src="../img/chara_trans.png" alt="水色のオリジナルキャラクターのイラスト">
+                      <p class="soon-text">Coming Soon</p>
+                    </div>`;
+
+    container.insertAdjacentHTML('beforeend', soonHTML)
+  }
 };
 
 // createWorks実行
 if (get) {
   createWorks(JSON.parse(get));
-  console.log(1)
 } else {
   fetch("../data/data.json")
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) throw new Error('サーバーエラー');
+      return response.json();
+    })
     .then(data => {
       sessionStorage.setItem("works", JSON.stringify(data.works));
       createWorks(data.works)
-    });
-  console.log(2)
+    })
+    .catch(error => {
+      window.alert('データ取得に失敗しました')
+      console.error('エラー内容', error)
+    })
 }
