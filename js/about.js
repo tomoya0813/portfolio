@@ -5,7 +5,10 @@ const learningContainer = document.getElementById('learning-container');
 const journeyContainer = document.getElementById('journey-container');
 
 fetch("../data/data.json")
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error('サーバーエラー');
+        return response.json()
+    })
     .then(data => {
 
         const lt = data.about.skills.languageAndTools;
@@ -26,7 +29,7 @@ fetch("../data/data.json")
         learningContainer.insertAdjacentHTML('beforeend', learningHTML);
 
         const journey = data.about.journey;
-        const journeyHTML = journey
+        const journeyHTML = [...journey]
             .reverse()
             .map(journeyItem =>
                 `<div class="journey-item">
@@ -34,5 +37,9 @@ fetch("../data/data.json")
                         <p class="journey-text">${journeyItem.text}</p>
                 </div>`)
             .join('');
-        journeyContainer.insertAdjacentHTML('beforebegin', journeyHTML);
-    });
+        journeyContainer.insertAdjacentHTML('beforeend', journeyHTML);
+    })
+    .catch(error => {
+        console.error('エラー内容', error);
+        window.alert('データ取得に失敗しました')
+    })
