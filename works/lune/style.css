@@ -187,7 +187,7 @@ header
 */
 
 .mainvisual {
-    background-image: url(img/mainvisual.png);
+    background-image: url(img/mainvisual.webp);
     background-repeat: no-repeat;
     background-color: rgba(0, 0, 0, 0.3);
     background-blend-mode: multiply;
