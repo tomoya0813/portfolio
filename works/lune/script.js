@@ -136,9 +136,14 @@ const coffeeAnime = () => {
     coffee.classList.add('fall');
     puddle.classList.add('appear');
     setTimeout(() => {
-        coffee.src = "img/coffee-cup2.png";
+        coffee.src = "img/coffee-cup2.webp";
         umbrella.classList.add('disappear');
     }, 100)
 }
 
 coffee.addEventListener('click', coffeeAnime);
+
+// footer年変更
+const year = document.getElementById('year');
+const date = new Date();
+year.textContent = date.getFullYear();
