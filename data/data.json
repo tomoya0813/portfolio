@@ -47,7 +47,7 @@
             "imgSrc": "img/works/clock.png",
             "imgAlt": "丸い時計",
             "text": "ポートフォリオ作成時の背景として使うために作成しました。ライブラリのように設定変更が可能です。",
-            "githubLink": "#"
+            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/clock"
         },
         {
             "title": "TETRIS",
@@ -60,7 +60,7 @@
             "imgSrc": "img/works/tetris.png",
             "imgAlt": "テトリスプレイ画面",
             "text": "JavaScriptを使って作成したテトリスです。PCでのプレイに対応してます。",
-            "githubLink": "#"
+            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/tetris"
         },
         {
             "title": "Cafe Lune",
@@ -73,7 +73,7 @@
             "imgSrc": "img/works/Lune.png",
             "imgAlt": "こぼれたコーヒーと浮き上がるluneの文字",
             "text": "架空のcafeサイトを作成しました。",
-            "githubLink": "#"
+            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/lune"
         }
     ]
 }
