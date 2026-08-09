@@ -17,6 +17,11 @@
             content: "・";
         }
 
+        h3::before {
+            content: "-";
+            margin-left: 9px;
+        }
+
         section {
             width: 320px;
             height: 320px;
@@ -25,7 +30,7 @@
         }
 
         pre {
-            border: 2px solid black;
+
             padding: 10px;
             font-size: 14px;
             margin: 5px;
@@ -94,23 +99,32 @@ secondHand: {
     <section>
         <h2> 変更例</h2>
         <pre><code>
-    createClock(
-    {
-      height:200,
-      borderRadius:20,
-      backgroundColor:"#eee",
-      secondHand:{
-        color:"red"
-        }
+createClock(
+{
+    height:300,
+    borderRadius:20,
+    backgroundColor:"#eee",
+    secondHand:{
+    color:"red"
     }
-    );</code></pre>
+}
+);</code></pre>
     </section>
+
+    <p id="before">デフォルト時</p>
+    <p id="after">変更時</p>
+
 </body>
 <script src="clock.js"></script>
 <script>
-    document.body.append(createClock({
-        width: 299, height: 299, backgroundColor: '#eee'
-
+    document.getElementById('before').after(createClock());
+    document.getElementById('after').after(createClock({
+        height: 300,
+        borderRadius: 20,
+        backgroundColor: "#eee",
+        secondHand: {
+            color: "red"
+        }
     }))
 </script>
 
