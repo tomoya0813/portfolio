@@ -1,10 +1,12 @@
 'use strict'
 
 const container = document.getElementById('container');
-const get = sessionStorage.getItem("works");
 
-const createWorks = (works) => {
-  const addHTML = [...works]
+//works取り込み
+const createWorks = async () => {
+  const data = await getData();
+
+  const addHTML = [...data.works]
     .reverse()
     .map(worksItem => {
 
@@ -32,7 +34,7 @@ const createWorks = (works) => {
   container.insertAdjacentHTML('beforeend', addHTML);
   // item奇数時の処理
 
-  const isOddNumber = works.length % 2 === 1;
+  const isOddNumber = data.works.length % 2 === 1;
 
   if (isOddNumber) {
     const soonHTML = `<div class="works-item soon">
@@ -44,21 +46,4 @@ const createWorks = (works) => {
   }
 };
 
-// createWorks実行
-if (get) {
-  createWorks(JSON.parse(get));
-} else {
-  fetch("../data/data.json")
-    .then(response => {
-      if (!response.ok) throw new Error('サーバーエラー');
-      return response.json();
-    })
-    .then(data => {
-      sessionStorage.setItem("works", JSON.stringify(data.works));
-      createWorks(data.works)
-    })
-    .catch(error => {
-      window.alert('データ取得に失敗しました')
-      console.error('エラー内容', error)
-    })
-}
+createWorks();

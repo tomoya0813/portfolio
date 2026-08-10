@@ -33,28 +33,23 @@ document.querySelector('.bg').append(createClock({
 
 // works取り込み
 const worksContainer = document.querySelector('.splide__list');
-fetch("data/data.json")
-    .then(response => {
-        if (!response.ok) throw new Error('サーバーエラー')
-        return response.json()
-    })
-    .then(data => {
-        sessionStorage.setItem("works", JSON.stringify(data.works));
 
-        const worksHTML = data.works
-            .map(work =>
-                `<li class="splide__slide"><img src="${work.imgSrc}" alt ="${work.imgAlt}"></li>`
-            )
-            .join('');
-        worksContainer.insertAdjacentHTML('beforeend', worksHTML);
-        new Splide('.splide', {
-            type: 'loop',
-            rewind: true,
-            autoplay: true,
-            interval: 5000
-        }).mount();
-    })
-    .catch(error => {
-        window.alert('作品データを読み込めませんでした。')
-    })
+const loadWorks = async () => {
+    const data = await getData();
+    const worksHTML = data.works
+        .map(work =>
+            `<li class="splide__slide"><img src="${work.imgSrc}" alt ="${work.imgAlt}"></li>`
+        )
+        .join('');
+    worksContainer.insertAdjacentHTML('beforeend', worksHTML);
+
+    new Splide('.splide', {
+        type: 'loop',
+        rewind: true,
+        autoplay: true,
+        interval: 5000
+    }).mount();
+};
+
+loadWorks();
 
