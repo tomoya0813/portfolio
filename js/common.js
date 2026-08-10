@@ -26,3 +26,27 @@ window.addEventListener('DOMContentLoaded', () => {
 mqCt.addEventListener('change', () => {
     checkCurrentTag();
 });
+
+// データ取得関数定義
+const getData = async () => {
+    const hasData = sessionStorage.getItem('data');
+
+    if (hasData) {
+        return JSON.parse(hasData)
+    }
+    else {
+        try {
+            const response = await fetch('../data/data.json')
+            if (response.ok) throw new Error('サーバーエラー');
+
+            const data = await response.json();
+
+            sessionStorage.setItem('data', JSON.stringify(data));
+            return data
+
+        } catch (error) {
+            window.alert('データ取得に失敗しました。');
+            console.error('エラー内容', error);
+        }
+    }
+}
