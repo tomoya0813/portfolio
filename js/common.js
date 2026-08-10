@@ -28,7 +28,7 @@ mqCt.addEventListener('change', () => {
 });
 
 // データ取得関数定義
-const getData = async () => {
+const getData = async (path) => {
     const hasData = sessionStorage.getItem('data');
 
     if (hasData) {
@@ -36,8 +36,8 @@ const getData = async () => {
     }
     else {
         try {
-            const response = await fetch('../data/data.json')
-            if (response.ok) throw new Error('サーバーエラー');
+            const response = await fetch(path)
+            if (!response.ok) throw new Error('サーバーエラー');
 
             const data = await response.json();
 

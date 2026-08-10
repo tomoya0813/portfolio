@@ -6,7 +6,7 @@ const journeyContainer = document.getElementById('journey-container');
 
 const createAbout = async () => {
 
-    const data = await getData();
+    const data = await getData('../data/data.json');
 
     // Language & Tools挿入
     const lt = data.about.skills.languageAndTools;

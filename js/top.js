@@ -35,7 +35,7 @@ document.querySelector('.bg').append(createClock({
 const worksContainer = document.querySelector('.splide__list');
 
 const loadWorks = async () => {
-    const data = await getData();
+    const data = await getData('data/data.json');
     const worksHTML = data.works
         .map(work =>
             `<li class="splide__slide"><img src="${work.imgSrc}" alt ="${work.imgAlt}"></li>`

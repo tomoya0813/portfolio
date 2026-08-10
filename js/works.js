@@ -4,7 +4,7 @@ const container = document.getElementById('container');
 
 //works取り込み
 const createWorks = async () => {
-  const data = await getData();
+  const data = await getData('../data/data.json');
 
   const addHTML = [...data.works]
     .reverse()
