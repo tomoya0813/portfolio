@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/contact', (req, res) => {
+    console.log('post到着')
     console.log(req.body);
     res.send('this is test message not submit')
 })
