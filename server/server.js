@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
 
 app.post('/contact', (req, res) => {
     console.log(req.body);
-    res.send('送信されました')
+    res.send('this is test message not submit')
 })
 
 app.listen(Port, '0.0.0.0', () => {
