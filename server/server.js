@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/contact', (req, res) => {
     console.log('post到着')
     console.log(req.body);
-    res.send('this is test message not submit')
+    res.send('this is test message')
 })
 
 app.listen(Port, '0.0.0.0', () => {
