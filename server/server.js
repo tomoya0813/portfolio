@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 const express = require('express');
+require('dotenv').config();
+
+
 const app = express();
 const Port = process.env.PORT || 3000;
 
@@ -10,49 +13,27 @@ const transporter = nodemailer.createTransport({
         user: "tomoya.portfolio.contact@gmail.com",
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+        refreshToken: process.env.GOOGLE_REFRESH_TOKEN
     },
 });
-
 
 app.post('/contact', async (req, res) => {
     try {
         const info = await transporter.sendMail({
             from: "tomoya.portfolio.contact@gmail.com",
             to: "tomoya.portfolio.contact@gmail.com",
-            subject: "Hello", // subject line
-            text: "Hello world?", // plain text body
+            subject: "テスト", // subject line
+            text: "これはテストメッセージ", // plain text body
         });
-
-        console.log("Message sent: %s", info.messageId);
-        // Preview URL is only available when using an Ethereal test account
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        console.log("Message sent:", info.messageId);
+        res.send('<h1>メールを送信しました</h1>');
     } catch (err) {
         console.error("Error while sending mail:", err);
+        res.send('<h1>メールを送信できませんでした</h1>')
     }
 })
 
-// app.post('/contact', async (req, res) => {
-//     console.log('post到着')
 
-//     try {
-//         const info = await transporter.sendMail({
-//             from: "tomoya.portfolio.contact@gmail.com",
-//             to: "tomoya.portfolio.contact@gmail.com",
-//             text: ` 
-//                 名前: ${req.body.name}
-//                 メール: ${req.body.email}
-//                 内容: ${req.body.message}
-//                 `,
-//             replyTo: req.body.email
-//         })
-
-//         console.log("Message sent: %s", info.messageId);
-//     } catch (err) {
-//         console.error("Error while sending mail:", err);
-//     }
-//     res.send('this is test message')
-// })
 
 
 app.listen(Port, '0.0.0.0', async () => {
