@@ -13,11 +13,12 @@ const transporter = nodemailer.createTransport({
         refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     },
 });
-
-
-
-app.use(express.urlencoded({ extended: true }));
-
+try {
+    await transporter.verify();
+    console.log("Server is ready to take our messages");
+} catch (err) {
+    console.error("Verification failed:", err);
+}
 
 app.post('/contact', async (req, res) => {
     console.log('post到着')
