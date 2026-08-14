@@ -43,7 +43,7 @@ app.get('/oauth2callback', (req, res) => {
 
 })
 
-app.listen(Port, '0.0.0.0', () => {
+app.listen(Port, '0.0.0.0', async () => {
 
     try {
         await transporter.verify();
