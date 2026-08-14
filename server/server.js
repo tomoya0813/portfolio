@@ -37,15 +37,6 @@ app.post('/contact', async (req, res) => {
 
 
 app.listen(Port, '0.0.0.0', async () => {
-
-    try {
-        await transporter.verify();
-        console.log("Server is ready to take our messages");
-    } catch (err) {
-        console.error("Verification failed:", err);
-    }
-
-    console.log(process.env.GOOGLE_CLIENT_ID);
     console.log('サーバー起動')
 })
 
