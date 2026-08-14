@@ -13,12 +13,6 @@ const transporter = nodemailer.createTransport({
         refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     },
 });
-try {
-    await transporter.verify();
-    console.log("Server is ready to take our messages");
-} catch (err) {
-    console.error("Verification failed:", err);
-}
 
 app.post('/contact', async (req, res) => {
     console.log('post到着')
@@ -50,6 +44,14 @@ app.get('/oauth2callback', (req, res) => {
 })
 
 app.listen(Port, '0.0.0.0', () => {
+
+    try {
+        await transporter.verify();
+        console.log("Server is ready to take our messages");
+    } catch (err) {
+        console.error("Verification failed:", err);
+    }
+
     console.log(process.env.GOOGLE_CLIENT_ID);
     console.log('サーバー起動')
 })
