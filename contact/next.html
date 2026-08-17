@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tomoya | Web Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Oswald:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="icon" href="../img/favicon.svg" type="image/svg+xml">
+    <style>
+        body {
+            font-family: "Oswald", sans-serif;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1 style="display: none">CONTACT</h1>
+    <p>メールアプリを起動します</p>
+    <p><span id="num"></span>秒後に<a href="../index.html"> TOPページ</a>へリダイレクトします。</p>
+</body>
+<script>
+    const num = document.getElementById('num');
+    let sec = 5;
+    num.textContent = sec;
+
+    const redirectTimer = setInterval(() => {
+        num.textContent = sec - 1;
+        sec = sec - 1
+        if (sec <= 0) {
+            clearInterval(redirectTimer);
+            location.href = "../index.html"
+        }
+    }, 1000)
+
+</script>
+
+</html>
