@@ -1,3 +1,14 @@
+.opinion {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.opinion a {
+    color: #551A8B;
+    text-decoration: underline solid #551A8B 1px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -44,19 +55,18 @@ textarea,
 }
 
 #submit {
-    width: 30%;
+    width: 40%;
     height: 70px;
+    font-size: 16px;
     background: #4784BF;
     color: #F7FCFE;
     border: none;
 }
 
-#submit::after {
-    content: "↗";
-    display: inline-block;
-    color: inherit;
-    margin-left: 10px;
+#submit br {
+    display: none;
 }
+
 
 header {
     position: relative;
@@ -74,8 +84,8 @@ header {
     }
 }
 
-@media (max-width:445px) {
-    #submit::after {
-        display: none;
+@media (max-width:381px) {
+    #submit br {
+        display: block;
     }
 }
