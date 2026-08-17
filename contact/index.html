@@ -20,8 +20,8 @@
         <p><a href="../index.html" class="name">Tomoya | Web Developer</a></p>
         <nav class="page-nav" id="nav" aria-label="サイトナビゲーション">
             <ul>
-                <li><a href="../about/index.html#top">about</a></li>
-                <li><a href="../works/index.html#top"> works</a></li>
+                <li><a href="../about/index.html">about</a></li>
+                <li><a href="../works/index.html"> works</a></li>
                 <li id="currentpage" class="currentpage"><a href="index.html">contact</a></li>
             </ul>
         </nav>
@@ -34,7 +34,8 @@
     </header>
     <main class="main-area">
         <h1 id="top">CONTACT</h1>
-        <form action="https://portfolio-o7xd.onrender.com/contact" method="post">
+        <p class="opinion">ご意見・ご感想は<a href="https://forms.gle/Cv8Bzs5yUtqtYeXN6" target="_blank">こちら</a></p>
+        <form>
             <div class="form-item">
                 <label for="name">NAME: </label>
                 <input type="text" name="name" id="name" required>
@@ -47,7 +48,7 @@
                 <label for="message">MESSAGE：</label>
                 <textarea id="message" name="message" required></textarea>
             </div>
-            <button id="submit" type="submit">送信</button>
+            <button id="submit" type="submit">メールを<br>作成</button>
         </form>
         <div class="white-triangle triangle-left">
 
@@ -63,6 +64,7 @@
             </svg>
         </div>
         <script src="../js/common.js"></script>
+        <script src="../js/contact.js"></script>
     </main>
 </body>
 
