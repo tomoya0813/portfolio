@@ -61,6 +61,7 @@ textarea,
     background: #4784BF;
     color: #F7FCFE;
     border: none;
+    cursor: pointer;
 }
 
 #submit br {
