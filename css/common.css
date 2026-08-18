@@ -5,6 +5,7 @@
     list-style: none;
     text-decoration: none;
     font-family: "Oswald", sans-serif;
+    scroll-behavior: smooth;
 }
 
 a {
@@ -153,6 +154,40 @@ h1 {
 }
 
 /* ここまで　三角＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝ */
+/* ここからアニメーション====================================================~ */
+.page {
+    position: fixed;
+    inset: 0;
+    transform: translate(-100%);
+    transition: 0.5s;
+    z-index: 50000;
+    background: #4784BF;
+}
+
+.page.full {
+    transform: translate(0);
+}
+
+
+/* @keyframes pagetransition-end {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    50% {
+        transform: rotate(45deg);
+    }
+
+    100% {
+        transform: rotate(90deg);
+    }
+} */
+/* @keyframes page-leave {
+    0%{
+        transform: ;
+    }
+} */
+/*アニメーション ============================================================ */
 
 /* ここからheader==================================================== */
 @media (max-width:470px) {
