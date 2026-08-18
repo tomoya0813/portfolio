@@ -5,14 +5,19 @@
                 "HTML",
                 "CSS",
                 "JavaScript",
+                "JSON",
                 "Figma"
             ],
             "learning": [
-                "c言語",
+                "C言語",
                 "Node.js"
             ]
         },
         "journey": [
+            {
+                "date": "2026.08",
+                "text": "ポートフォリオを完成"
+            },
             {
                 "date": "2026.07",
                 "text": "ポートフォリオの作成を開始"
@@ -46,7 +51,7 @@
             "demoLink": "clock/index.html",
             "imgSrc": "img/works/clock.png",
             "imgAlt": "丸い時計",
-            "text": "ポートフォリオ作成時の背景として使うために作成しました。ライブラリのように設定変更が可能です。",
+            "text": "ポートフォリオの背景として使用するために作成しました。設定を変更できるよう、ライブラリ形式で実装しています。",
             "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/clock"
         },
         {
@@ -59,7 +64,7 @@
             "demoLink": "tetris/index.html",
             "imgSrc": "img/works/tetris.png",
             "imgAlt": "テトリスプレイ画面",
-            "text": "JavaScriptを使って作成したテトリスです。PCでのプレイに対応してます。",
+            "text": "JavaScriptを使って作成したテトリスです。PCでのプレイに対応しています。",
             "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/tetris"
         },
         {
