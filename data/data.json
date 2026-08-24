@@ -55,17 +55,17 @@
             "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/clock"
         },
         {
-            "title": "TETRIS",
+            "title": "Block Puzzle",
             "tech": [
                 "HTML",
                 "CSS",
                 "JavaScript"
             ],
-            "demoLink": "tetris/index.html",
-            "imgSrc": "img/works/tetris.png",
-            "imgAlt": "テトリスプレイ画面",
-            "text": "JavaScriptを使って作成したテトリスです。PCでのプレイに対応しています。",
-            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/tetris"
+            "demoLink": "block-puzzle/index.html",
+            "imgSrc": "img/works/block-puzzle.png",
+            "imgAlt": "ゲームプレイ画面",
+            "text": "JavaScriptを使って作成した落ちものパズルです。PCでのプレイに対応しています。",
+            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/block-puzzle"
         },
         {
             "title": "Cafe Lune",
