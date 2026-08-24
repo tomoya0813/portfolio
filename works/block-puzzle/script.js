@@ -759,7 +759,7 @@ const resetGame = () => {
 
     blockContainer = blockShuffle();
     currentPiece = spawnPiece();
-    text1.textContent = "TETRIS";
+    text1.textContent = "Block Puzzle";
     text2.textContent = "Press Enter";
     text3.textContent = "Start";
     message.classList.remove('none');
