@@ -6,14 +6,18 @@
                 "CSS",
                 "JavaScript",
                 "JSON",
-                "Figma"
+                "Figma",
+                "React"
             ],
             "learning": [
-                "C言語",
                 "Node.js"
             ]
         },
         "journey": [
+            {
+                "date": "2026.09",
+                "text": "Reactを学習し、ReactGPTを作成"
+            },
             {
                 "date": "2026.08",
                 "text": "ポートフォリオを完成"
@@ -42,7 +46,19 @@
     },
     "works": [
         {
-            "title": "create clock",
+            "title": "ReactGPT",
+            "tech": [
+                "React",
+                "Tailwind CSS"
+            ],
+            "demoLink": "https://tomoya0813.github.io/ReactGPT/",
+            "imgSrc": "img/works/ReactGPT.webp",
+            "imgAlt": "ReactGPTのチャット画面",
+            "text": "Reactの学習を目的に、ChatGPTをイメージしたチャットUIを制作しました。",
+            "githubLink": "https://github.com/tomoya0813/ReactGPT"
+        },
+        {
+            "title": "Create Clock",
             "tech": [
                 "HTML",
                 "CSS",
