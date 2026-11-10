@@ -7,10 +7,11 @@
                 "JavaScript",
                 "JSON",
                 "Figma",
-                "React"
+                "React",
+                "C"
             ],
             "learning": [
-                "Node.js"
+                "Java"
             ]
         },
         "journey": [
@@ -64,11 +65,11 @@
                 "CSS",
                 "JavaScript"
             ],
-            "demoLink": "clock/index.html",
+            "demoLink": "https://tomoya0813.github.io/clock.js/",
             "imgSrc": "img/works/clock.png",
             "imgAlt": "丸い時計",
             "text": "ポートフォリオの背景として使用するために作成しました。設定を変更できるよう、ライブラリ形式で実装しています。",
-            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/clock"
+            "githubLink": "https://github.com/tomoya0813/clock.js"
         },
         {
             "title": "Block Puzzle",
@@ -77,11 +78,11 @@
                 "CSS",
                 "JavaScript"
             ],
-            "demoLink": "block-puzzle/index.html",
+            "demoLink": "https://tomoya0813.github.io/block-puzzle/",
             "imgSrc": "img/works/block-puzzle.png",
             "imgAlt": "ゲームプレイ画面",
             "text": "JavaScriptを使って作成した落ちものパズルです。PCでのプレイに対応しています。",
-            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/block-puzzle"
+            "githubLink": "https://github.com/tomoya0813/block-puzzle"
         },
         {
             "title": "Cafe Lune",
@@ -90,11 +91,11 @@
                 "CSS",
                 "JavaScript"
             ],
-            "demoLink": "lune/index.html",
+            "demoLink": "https://tomoya0813.github.io/Lune/",
             "imgSrc": "img/works/Lune.png",
             "imgAlt": "こぼれたコーヒーと浮き上がるluneの文字",
             "text": "架空のcafeサイトを作成しました。",
-            "githubLink": "https://github.com/tomoya0813/portfolio/tree/main/works/lune"
+            "githubLink": "https://github.com/tomoya0813/Lune"
         }
     ]
 }
